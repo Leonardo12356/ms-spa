@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D6228DA1-ABD5-4EBA-9AE4-54F124FE6DB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ms-spa.Api", "src\ms-spa.Api\ms-spa.Api.csproj", "{ECB25235-E4C5-43D0-A641-B4B6CFBA8A11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DB43076E-C023-468C-85D1-4E04647325B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ms-spa.Test", "Test\ms-spa.Test\ms-spa.Test.csproj", "{EBBEF50B-8695-49EB-B09E-87091184B82C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECB25235-E4C5-43D0-A641-B4B6CFBA8A11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECB25235-E4C5-43D0-A641-B4B6CFBA8A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECB25235-E4C5-43D0-A641-B4B6CFBA8A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECB25235-E4C5-43D0-A641-B4B6CFBA8A11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBBEF50B-8695-49EB-B09E-87091184B82C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBBEF50B-8695-49EB-B09E-87091184B82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBBEF50B-8695-49EB-B09E-87091184B82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBBEF50B-8695-49EB-B09E-87091184B82C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ECB25235-E4C5-43D0-A641-B4B6CFBA8A11} = {D6228DA1-ABD5-4EBA-9AE4-54F124FE6DB8}
+		{EBBEF50B-8695-49EB-B09E-87091184B82C} = {DB43076E-C023-468C-85D1-4E04647325B7}
+	EndGlobalSection
+EndGlobal
