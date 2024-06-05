@@ -9,13 +9,9 @@ namespace ms_spa.Api.Controllers
 {
     [ApiController]
     [Route("usuarios")]
-    public class UsuarioController : BaseController
+    public class UsuarioController(IUsuarioService usuarioService) : BaseController
     {
-        private readonly IUsuarioService _usuarioService;
-        public UsuarioController(IUsuarioService usuarioService)
-        {
-            _usuarioService = usuarioService;
-        }
+        private readonly IUsuarioService _usuarioService = usuarioService;
 
         [HttpPost]
         [Authorize]
