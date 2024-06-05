@@ -153,14 +153,12 @@ namespace ms_spa.Test.Domain.Services.Classes
             // Arrange
             var usuarioModels = new List<Usuario>
             {
-                new Usuario
-                {
+                new() {
                     Id = 1, Email = "leo@teste",
                     Perfil = "Admin",
                     DataCadastro = DateTime.Now
                 },
-                new Usuario
-                {
+                new() {
                     Id = 2,
                     Email = "leoaguiar.dsn.pack",
                     Perfil = "User",
@@ -169,13 +167,11 @@ namespace ms_spa.Test.Domain.Services.Classes
             };
             var usuarioResponses = new List<UsuarioResponseContract>
             {
-                new UsuarioResponseContract
-                {
+                new() {
                     Id = 1, Perfil = "Admin",
                     DataCadastro = usuarioModels[0].DataCadastro
                 },
-                    new UsuarioResponseContract
-                {
+                    new() {
                     Id = 2, Perfil = "User",
                     DataCadastro = usuarioModels[1].DataCadastro
                 }
@@ -194,18 +190,15 @@ namespace ms_spa.Test.Domain.Services.Classes
 
 
 
-        private string GenerateHash(string senha)
+        private static string GenerateHash(string senha)
         {
-            using (var sha256 = SHA256.Create())
+            var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(senha));
+            var builder = new StringBuilder();
+            foreach (var t in bytes)
             {
-                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(senha));
-                var builder = new StringBuilder();
-                foreach (var t in bytes)
-                {
-                    builder.Append(t.ToString("x2"));
-                }
-                return builder.ToString();
+                builder.Append(t.ToString("x2"));
             }
+            return builder.ToString();
         }
     }
 }
