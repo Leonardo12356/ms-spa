@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ms_spa.Api.AutoMapper;
 using ms_spa.Api.Data;
+using ms_spa.Api.Domain.Repository.Classes;
+using ms_spa.Api.Domain.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +31,7 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
 
     var config = new MapperConfiguration(cfg =>
     {
-
+        cfg.AddProfile<UsuarioProfile>();
     });
 
     IMapper mapper = config.CreateMapper();
@@ -36,7 +39,8 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     builder.Services
     .AddSingleton(builder.Configuration)
     .AddSingleton(builder.Environment)
-    .AddSingleton(mapper);
+    .AddSingleton(mapper)
+    .AddScoped<IUsuarioRepository, UsuarioRepository>();
 }
 
 // Configura o serviços da API.
