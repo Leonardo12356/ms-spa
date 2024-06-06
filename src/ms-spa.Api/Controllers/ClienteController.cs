@@ -1,48 +1,24 @@
-using System.Security.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ms_spa.Api.Contract.Usuario;
+using ms_spa.Api.Contract.Cliente;
 using ms_spa.Api.Domain.Services.Interfaces;
 using ms_spa.Api.Exceptions;
 
 namespace ms_spa.Api.Controllers
 {
     [ApiController]
-    [Route("usuarios")]
-    public class UsuarioController(IUsuarioService usuarioService) : BaseController
+    [Route("cliente")]
+    public class ClienteController(IClienteService ClienteService) : BaseController
     {
-        private readonly IUsuarioService _usuarioService = usuarioService;
+        private readonly IClienteService _ClienteService = ClienteService;
 
         [HttpPost]
-        [Route("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Autenticacao(UsuarioLoginRequestContract contrato)
+        [Authorize]
+        public async Task<IActionResult> Adicionar(ClienteRequestContract contrato)
         {
             try
             {
-                return Ok(await _usuarioService.Autenticar(contrato));
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(RetornarModelNotFound(ex));
-            }
-            catch (AuthenticationException ex)
-            {
-                return Unauthorized(RetornarModelUnauthorized(ex));
-            }
-            catch (Exception ex)
-            {
-                return Problem(ex.Message);
-            }
-        }
-
-        [HttpPost]
-        // [Authorize]
-        public async Task<IActionResult> Adicionar(UsuarioRequestContract contrato)
-        {
-            try
-            {
-                return Created("", await _usuarioService.Adicionar(contrato, 0));
+                return Created("", await _ClienteService.Adicionar(contrato, 0));
             }
             catch (BadRequestException ex)
             {
@@ -61,7 +37,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.ObterTodos(0));
+                return Ok(await _ClienteService.ObterTodos(0));
             }
             catch (Exception ex)
             {
@@ -77,7 +53,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.ObterPorId(id, 0));
+                return Ok(await _ClienteService.ObterPorId(id, 0));
             }
             catch (NotFoundException ex)
             {
@@ -93,11 +69,11 @@ namespace ms_spa.Api.Controllers
         [HttpPut]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Atualizar(int id, UsuarioRequestContract contrato)
+        public async Task<IActionResult> Atualizar(int id, ClienteRequestContract contrato)
         {
             try
             {
-                return Ok(await _usuarioService.Atualizar(id, contrato, 0));
+                return Ok(await _ClienteService.Atualizar(id, contrato, 0));
             }
             catch (NotFoundException ex)
             {
@@ -121,7 +97,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                await _usuarioService.Inativar(id, 0);
+                await _ClienteService.Inativar(id, 0);
                 return NoContent();
             }
             catch (NotFoundException ex)
@@ -134,5 +110,6 @@ namespace ms_spa.Api.Controllers
                 return Problem(ex.Message);
             }
         }
+
     }
 }

@@ -7,6 +7,7 @@ namespace ms_spa.Api.Contract.Produto
         public double ValorCusto { get; set; }
         public double ValorVenda { get; set; }
         public string Observacao { get; set; } = string.Empty;
+        public DateTime DataCadastro { get; set; }
         public int ClienteId { get; set; }
     }
 }

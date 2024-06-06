@@ -15,7 +15,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "spa-db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new UsuarioRepository(context);
             var usuario = new Usuario { Email = "leoaguiar.dsn.pack", Senha = "senha123", Perfil = "Admin" };
 
@@ -35,7 +35,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "atualizar_usuario_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new UsuarioRepository(context);
             var usuario = new Usuario { Email = "leoaguiar.dsn.pack", Senha = "senha123", Perfil = "Admin" };
 
@@ -58,7 +58,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "deletar_usuario_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new UsuarioRepository(context);
             var usuario = new Usuario { Email = "leoaguiar.dsn.pack", Senha = "senha123", Perfil = "Admin" };
 
@@ -80,7 +80,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "obter_usuario_email_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new UsuarioRepository(context);
             var usuario = new Usuario { Email = "leoaguiar.dsn.pack", Senha = "senha123", Perfil = "Admin" };
 
@@ -102,7 +102,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "obter_usuario_id_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new UsuarioRepository(context);
             var usuario = new Usuario { Email = "leoaguiar.dsn.pack", Senha = "senha123", Perfil = "Admin" };
 
@@ -124,7 +124,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "obter_todos_usuarios_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new UsuarioRepository(context);
             await repository.Adicionar(new Usuario { Email = "leoaguiar.dsn.pack", Senha = "senha123", Perfil = "Admin" });
             await repository.Adicionar(new Usuario { Email = "leo.dsn.pack", Senha = "senha123", Perfil = "User" });

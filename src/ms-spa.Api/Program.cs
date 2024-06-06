@@ -35,6 +35,7 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     {
         cfg.AddProfile<UsuarioProfile>();
         cfg.AddProfile<ProdutoProfile>();
+        cfg.AddProfile<ClienteProfile>();
     });
 
     IMapper mapper = config.CreateMapper();
@@ -47,7 +48,9 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     .AddScoped<IUsuarioRepository, UsuarioRepository>()
     .AddScoped<IUsuarioService, UsuarioService>()
     .AddScoped<IProdutoRepository, ProdutoRepository>()
-    .AddScoped<IProdutoService, ProdutoService>();
+    .AddScoped<IProdutoService, ProdutoService>()
+    .AddScoped<IClienteRepository, ClienteRepository>()
+    .AddScoped<IClienteService, ClienteService>();
 }
 
 // Configura o serviços da API.
