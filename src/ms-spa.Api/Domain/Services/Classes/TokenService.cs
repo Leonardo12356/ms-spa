@@ -6,14 +6,9 @@ using ms_spa.Api.Domain.Models;
 
 namespace ms_spa.Api.Domain.Services.Classes
 {
-    public class TokenService
+    public class TokenService(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
-
-        public TokenService(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        private readonly IConfiguration _configuration = configuration;
 
         public string GerarToken(Usuario usuario)
         {

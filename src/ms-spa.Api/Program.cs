@@ -8,6 +8,8 @@ using ms_spa.Api.AutoMapper;
 using ms_spa.Api.Data;
 using ms_spa.Api.Domain.Repository.Classes;
 using ms_spa.Api.Domain.Repository.Interfaces;
+using ms_spa.Api.Domain.Services.Classes;
+using ms_spa.Api.Domain.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,7 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     var config = new MapperConfiguration(cfg =>
     {
         cfg.AddProfile<UsuarioProfile>();
+        cfg.AddProfile<ProdutoProfile>();
     });
 
     IMapper mapper = config.CreateMapper();
@@ -40,7 +43,11 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     .AddSingleton(builder.Configuration)
     .AddSingleton(builder.Environment)
     .AddSingleton(mapper)
-    .AddScoped<IUsuarioRepository, UsuarioRepository>();
+    .AddScoped<TokenService>()
+    .AddScoped<IUsuarioRepository, UsuarioRepository>()
+    .AddScoped<IUsuarioService, UsuarioService>()
+    .AddScoped<IProdutoRepository, ProdutoRepository>()
+    .AddScoped<IProdutoService, ProdutoService>();
 }
 
 // Configura o serviços da API.

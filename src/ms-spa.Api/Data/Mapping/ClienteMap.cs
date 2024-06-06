@@ -6,29 +6,33 @@ namespace ms_spa.Api.Data.Mapping
 {
     public class ClienteMap : IEntityTypeConfiguration<Cliente>
     {
+        private const string varchar = "VARCHAR";
+
         public void Configure(EntityTypeBuilder<Cliente> builder)
         {
             builder.ToTable("cliente")
               .HasKey(c => c.Id);
 
             builder.Property(c => c.Nome)
-                .HasColumnType("VARCHAR")
+                .HasColumnType(varchar)
                 .IsRequired();
 
             builder.Property(c => c.Email)
-                .HasColumnType("VARCHAR");
+                .HasColumnType(varchar)
+                .IsRequired();
 
             builder.Property(c => c.Cpf)
-                .HasColumnType("VARCHAR");
+                .HasColumnType(varchar)
+                .IsRequired();
 
             builder.Property(c => c.Telefone)
-                .HasColumnType("VARCHAR");
+                .HasColumnType(varchar);
 
             builder.Property(c => c.Endereco)
-                .HasColumnType("VARCHAR");
+                .HasColumnType(varchar);
 
             builder.Property(c => c.Observacao)
-                .HasColumnType("VARCHAR");
+                .HasColumnType(varchar);
 
             builder.HasOne(c => c.Usuario)
                 .WithMany(u => u.Clientes)
