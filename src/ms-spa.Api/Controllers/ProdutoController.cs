@@ -1,24 +1,24 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ms_spa.Api.Contract.Usuario;
+using ms_spa.Api.Contract.Produto;
 using ms_spa.Api.Domain.Services.Interfaces;
 using ms_spa.Api.Exceptions;
 
 namespace ms_spa.Api.Controllers
 {
     [ApiController]
-    [Route("usuarios")]
-    public class UsuarioController(IUsuarioService usuarioService) : BaseController
+    [Route("produto")]
+    public class ProdutoController(IProdutoService produtoService) : BaseController
     {
-        private readonly IUsuarioService _usuarioService = usuarioService;
+        private readonly IProdutoService _produtoService = produtoService;
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Adicionar(UsuarioRequestContract contrato)
+        public async Task<IActionResult> Adicionar(ProdutoRequestContract contrato)
         {
             try
             {
-                return Created("", await _usuarioService.Adicionar(contrato, 0));
+                return Created("", await _produtoService.Adicionar(contrato, 0));
             }
             catch (BadRequestException ex)
             {
@@ -37,7 +37,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.ObterTodos(0));
+                return Ok(await _produtoService.ObterTodos(0));
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.ObterPorId(id, 0));
+                return Ok(await _produtoService.ObterPorId(id, 0));
             }
             catch (NotFoundException ex)
             {
@@ -69,11 +69,11 @@ namespace ms_spa.Api.Controllers
         [HttpPut]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Atualizar(int id, UsuarioRequestContract contrato)
+        public async Task<IActionResult> Atualizar(int id, ProdutoRequestContract contrato)
         {
             try
             {
-                return Ok(await _usuarioService.Atualizar(id, contrato, 0));
+                return Ok(await _produtoService.Atualizar(id, contrato, 0));
             }
             catch (NotFoundException ex)
             {
@@ -97,7 +97,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                await _usuarioService.Inativar(id, 0);
+                await _produtoService.Inativar(id, 0);
                 return NoContent();
             }
             catch (NotFoundException ex)
@@ -110,5 +110,6 @@ namespace ms_spa.Api.Controllers
                 return Problem(ex.Message);
             }
         }
+
     }
 }
