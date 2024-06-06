@@ -19,5 +19,7 @@ namespace ms_spa.Api.Domain.Models
         public DateTime DataCadastro { get; set; }
 
         public DateTime? DataInativacao { get; set; }
+
+        public ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
     }
 }

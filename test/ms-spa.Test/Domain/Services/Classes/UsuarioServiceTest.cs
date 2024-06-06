@@ -1,12 +1,13 @@
 using System.Security.Cryptography;
 using System.Text;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using ms_spa.Api.Contract.Usuario;
 using ms_spa.Api.Domain.Models;
 using ms_spa.Api.Domain.Repository.Interfaces;
 using ms_spa.Api.Domain.Services.Classes;
-using ms_spa.Api.Exceptions;
+
 
 namespace ms_spa.Test.Domain.Services.Classes
 {
@@ -20,7 +21,9 @@ namespace ms_spa.Test.Domain.Services.Classes
         {
             _usuarioRepositoryMock = new Mock<IUsuarioRepository>();
             _mapperMock = new Mock<IMapper>();
-            _usuarioService = new UsuarioService(_usuarioRepositoryMock.Object, _mapperMock.Object);
+            var configuration = new Mock<IConfiguration>();
+            var tokenService = new TokenService(configuration.Object);
+            _usuarioService = new UsuarioService(_usuarioRepositoryMock.Object, _mapperMock.Object, tokenService);
         }
 
 
