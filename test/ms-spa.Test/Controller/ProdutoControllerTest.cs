@@ -13,7 +13,7 @@ namespace ms_spa.Test.Controller
 {
     public class ProdutoControllerTest
     {
-        private readonly Mock<IService<ProdutoRequestContract, ProdutoResponseContract, int>> _produtoServiceMock = new();
+        private readonly Mock<IProdutoService> _produtoServiceMock = new();
         private readonly ProdutoController _controller;
 
         public ProdutoControllerTest()

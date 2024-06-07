@@ -13,7 +13,7 @@ namespace ms_spa.Test.Controller
 {
     public class ClienteControllerTest
     {
-        private readonly Mock<IService<ClienteRequestContract, ClienteResponseContract, int>> _clienteServiceMock = new();
+        private readonly Mock<IClienteService> _clienteServiceMock = new();
         private readonly ClienteController _controller;
 
         public ClienteControllerTest()
@@ -22,7 +22,7 @@ namespace ms_spa.Test.Controller
 
             var userClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, "1")
+                new(ClaimTypes.NameIdentifier, "1")
             };
             var identity = new ClaimsIdentity(userClaims, "TestAuthType");
             var clientePrincipal = new ClaimsPrincipal(identity);
