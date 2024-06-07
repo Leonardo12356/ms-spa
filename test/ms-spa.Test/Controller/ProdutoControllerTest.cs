@@ -22,7 +22,7 @@ namespace ms_spa.Test.Controller
 
             var userClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, "1")
+                new(ClaimTypes.NameIdentifier, "1")
             };
             var identity = new ClaimsIdentity(userClaims, "TestAuthType");
             var ProdutoPrincipal = new ClaimsPrincipal(identity);
