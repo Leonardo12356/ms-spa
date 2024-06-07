@@ -8,7 +8,37 @@ namespace ms_spa.Api.Data.Mapping
     {
         public void Configure(EntityTypeBuilder<Produto> builder)
         {
-            throw new NotImplementedException();
+            builder.ToTable("produto")
+                .HasKey(p => p.Id);
+
+            builder.Property(p => p.Nome)
+                .HasColumnType("VARCHAR")
+                .IsRequired();
+
+            builder.Property(p => p.QuantidadeEstoque)
+                .HasColumnType("int")
+                .IsRequired();
+
+            builder.Property(p => p.ValorCusto)
+                .HasColumnType("double precision")
+                .IsRequired();
+
+            builder.Property(p => p.ValorVenda)
+                .HasColumnType("double precision")
+                .IsRequired();
+
+            builder.Property(p => p.Observacao)
+                .HasColumnType("VARCHAR");
+
+            builder.Property(p => p.DataCadastro)
+                .HasColumnType("timestamp")
+                .IsRequired();
+
+            builder.HasOne(p => p.Cliente)
+                .WithMany()
+                .HasForeignKey(p => p.ClienteId);
+
+            builder.HasQueryFilter(p => p.Cliente.DataInativacao == null);
         }
     }
 }

@@ -4,7 +4,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ms_spa.Api.AutoMapper;
 using ms_spa.Api.Data;
+using ms_spa.Api.Domain.Repository.Classes;
+using ms_spa.Api.Domain.Repository.Interfaces;
+using ms_spa.Api.Domain.Services.Classes;
+using ms_spa.Api.Domain.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +33,9 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
 
     var config = new MapperConfiguration(cfg =>
     {
-
+        cfg.AddProfile<UsuarioProfile>();
+        cfg.AddProfile<ProdutoProfile>();
+        cfg.AddProfile<ClienteProfile>();
     });
 
     IMapper mapper = config.CreateMapper();
@@ -36,7 +43,14 @@ static void ConfigurarInjecaoDeDependencia(WebApplicationBuilder builder)
     builder.Services
     .AddSingleton(builder.Configuration)
     .AddSingleton(builder.Environment)
-    .AddSingleton(mapper);
+    .AddSingleton(mapper)
+    .AddScoped<TokenService>()
+    .AddScoped<IUsuarioRepository, UsuarioRepository>()
+    .AddScoped<IUsuarioService, UsuarioService>()
+    .AddScoped<IProdutoRepository, ProdutoRepository>()
+    .AddScoped<IProdutoService, ProdutoService>()
+    .AddScoped<IClienteRepository, ClienteRepository>()
+    .AddScoped<IClienteService, ClienteService>();
 }
 
 // Configura o serviços da API.
