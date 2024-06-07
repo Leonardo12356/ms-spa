@@ -8,7 +8,7 @@ namespace ms_spa.Api.Controllers
 {
     [ApiController]
     [Route("produto")]
-    public class ProdutoController(IService<ProdutoRequestContract, ProdutoResponseContract, int> produtoService) : BaseController
+    public class ProdutoController(IProdutoService produtoService) : BaseController
     {
         private readonly IService<ProdutoRequestContract, ProdutoResponseContract, int> _produtoService = produtoService;
 
