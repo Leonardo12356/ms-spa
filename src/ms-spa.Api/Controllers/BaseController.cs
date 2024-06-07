@@ -4,7 +4,7 @@ using ms_spa.Api.Contract;
 
 namespace ms_spa.Api.Controllers
 {
-    public class BaseController : ControllerBase
+    public abstract class BaseController : ControllerBase
     {
         protected int _idUsuario;
         protected int ObterIdUsuarioLogado()

@@ -38,7 +38,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                 Telefone = "12345",
                 Endereco = "rua catablau",
                 Observacao = "Cliente",
-                UsuarioId = 1
+
             };
             var clienteModel = new Cliente
             {
@@ -89,7 +89,6 @@ namespace ms_spa.Test.Domain.Services.Classes
                 Telefone = "12345",
                 Endereco = "rua catablau",
                 Observacao = "Cliente",
-                UsuarioId = 1
             };
             var ClienteModel = new Cliente
             {
@@ -197,7 +196,7 @@ namespace ms_spa.Test.Domain.Services.Classes
         public async Task ObterTodos_DeveRetornarUsuariosCorretamente()
         {
             // Arrange
-            var ClienteModels = new List<Cliente>
+            var clienteModels = new List<Cliente>
             {
                 new() {
                     Id = 1,
@@ -220,7 +219,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                     UsuarioId = 1
                 }
             };
-            var ClienteResponses = new List<ClienteResponseContract>
+            var clienteResponses = new List<ClienteResponseContract>
             {
                 new() {
                     Id = 3,
@@ -244,15 +243,20 @@ namespace ms_spa.Test.Domain.Services.Classes
                 }
             };
 
-            _clienteRepositoryMock.Setup(r => r.ObterTodos()).ReturnsAsync(ClienteModels);
-            _mapperMock.Setup(m => m.Map<IEnumerable<ClienteResponseContract>>(It.IsAny<IEnumerable<Cliente>>())).Returns(ClienteResponses);
+            _clienteRepositoryMock
+                .Setup(r => r.ObeterPeloIdUsuario(It.IsAny<int>()))
+                .ReturnsAsync(clienteModels);
+
+            _mapperMock
+                .Setup(m => m.Map<IEnumerable<ClienteResponseContract>>(It.IsAny<IEnumerable<Cliente>>()))
+                .Returns(clienteResponses);
 
             // Act
             var result = await _clienteService.ObterTodos(1);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(ClienteResponses.Count, result.Count());
+            Assert.Equal(clienteResponses.Count, result.Count());
         }
     }
 }

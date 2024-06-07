@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ms_spa.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,13 +35,14 @@ namespace ms_spa.Api.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UsuarioId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "VARCHAR", nullable: false),
                     Email = table.Column<string>(type: "VARCHAR", nullable: false),
                     Cpf = table.Column<string>(type: "VARCHAR", nullable: false),
                     Telefone = table.Column<string>(type: "VARCHAR", nullable: false),
                     Endereco = table.Column<string>(type: "VARCHAR", nullable: false),
                     Observacao = table.Column<string>(type: "VARCHAR", nullable: false),
-                    UsuarioId = table.Column<int>(type: "integer", nullable: true)
+                    DataInativacao = table.Column<DateTime>(type: "timestamp", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,7 +51,8 @@ namespace ms_spa.Api.Migrations
                         name: "FK_cliente_usuario_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "usuario",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

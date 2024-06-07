@@ -34,6 +34,9 @@ namespace ms_spa.Api.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR");
 
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("timestamp");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("VARCHAR");
@@ -54,7 +57,7 @@ namespace ms_spa.Api.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -137,7 +140,9 @@ namespace ms_spa.Api.Migrations
                 {
                     b.HasOne("ms_spa.Api.Domain.Models.Usuario", "Usuario")
                         .WithMany("Clientes")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });

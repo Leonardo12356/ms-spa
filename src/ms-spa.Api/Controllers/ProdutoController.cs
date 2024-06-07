@@ -8,9 +8,9 @@ namespace ms_spa.Api.Controllers
 {
     [ApiController]
     [Route("produto")]
-    public class ProdutoController(IProdutoService produtoService) : BaseController
+    public class ProdutoController(IService<ProdutoRequestContract, ProdutoResponseContract, int> produtoService) : BaseController
     {
-        private readonly IProdutoService _produtoService = produtoService;
+        private readonly IService<ProdutoRequestContract, ProdutoResponseContract, int> _produtoService = produtoService;
 
         [HttpPost]
         [Authorize]
@@ -18,7 +18,8 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Created("", await _produtoService.Adicionar(contrato, 0));
+                _idUsuario = ObterIdUsuarioLogado();
+                return Created("", await _produtoService.Adicionar(contrato, _idUsuario));
             }
             catch (BadRequestException ex)
             {
@@ -37,7 +38,8 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _produtoService.ObterTodos(0));
+                _idUsuario = ObterIdUsuarioLogado();
+                return Ok(await _produtoService.ObterTodos(_idUsuario));
             }
             catch (Exception ex)
             {
@@ -53,7 +55,8 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _produtoService.ObterPorId(id, 0));
+                _idUsuario = ObterIdUsuarioLogado();
+                return Ok(await _produtoService.ObterPorId(id, _idUsuario));
             }
             catch (NotFoundException ex)
             {
@@ -73,7 +76,8 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _produtoService.Atualizar(id, contrato, 0));
+                _idUsuario = ObterIdUsuarioLogado();
+                return Ok(await _produtoService.Atualizar(id, contrato, _idUsuario));
             }
             catch (NotFoundException ex)
             {
@@ -97,7 +101,8 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                await _produtoService.Inativar(id, 0);
+                _idUsuario = ObterIdUsuarioLogado();
+                await _produtoService.Inativar(id, _idUsuario);
                 return NoContent();
             }
             catch (NotFoundException ex)

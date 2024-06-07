@@ -96,7 +96,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
 
             // Assert
             var result = await context.Clientes.FindAsync(cliente.Id);
-            Assert.Null(result);
+            Assert.NotNull(result?.DataInativacao);
         }
 
 

@@ -41,8 +41,8 @@ namespace ms_spa.Api.Domain.Repository.Classes
         public async Task Deletar(Cliente entidade)
         {
 
-            _context.Entry(entidade).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            entidade.DataInativacao = DateTime.Now;
+            await Atualizar(entidade);
         }
 
         public async Task<IEnumerable<Cliente>> ObterTodos()
@@ -56,6 +56,14 @@ namespace ms_spa.Api.Domain.Repository.Classes
             return await _context.Clientes.AsNoTracking()
             .Where(u => u.Id == id)
             .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Cliente>> ObeterPeloIdUsuario(int IdUsuario)
+        {
+            return await _context.Clientes.AsNoTracking()
+            .Where(c => c.UsuarioId == IdUsuario)
+            .OrderBy(c => c.Id)
+            .ToListAsync();
         }
     }
 }

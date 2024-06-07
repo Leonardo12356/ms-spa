@@ -7,45 +7,55 @@ using ms_spa.Api.Exceptions;
 
 namespace ms_spa.Api.Domain.Services.Classes
 {
-    public class ClienteService(IClienteRepository ClienteRepository, IMapper mapper) : IClienteService
+    public class ClienteService(IClienteRepository clienteRepository, IMapper mapper) : IClienteService
     {
-        private readonly IClienteRepository _clienteRepository = ClienteRepository;
+        private readonly IClienteRepository _clienteRepository = clienteRepository;
         private readonly IMapper _mapper = mapper;
 
         public async Task<ClienteResponseContract> Adicionar(ClienteRequestContract entidade, int idUsuario)
         {
-            var Cliente = _mapper.Map<Cliente>(entidade);
-            Cliente = await _clienteRepository.Adicionar(Cliente);
-            return _mapper.Map<ClienteResponseContract>(Cliente);
+            var cliente = _mapper.Map<Cliente>(entidade);
+            cliente.UsuarioId = idUsuario;
+            cliente = await _clienteRepository.Adicionar(cliente);
+            return _mapper.Map<ClienteResponseContract>(cliente);
         }
 
         public async Task<ClienteResponseContract> Atualizar(int id, ClienteRequestContract entidade, int idUsuario)
         {
-            _ = await _clienteRepository.ObterPorId(id) ?? throw new NotFoundException("Cliente não encotrada para atualizar.");
-            var Cliente = _mapper.Map<Cliente>(entidade);
-            Cliente.Id = id;
+            Cliente cliente = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
 
-            Cliente = await _clienteRepository.Atualizar(Cliente);
-            return _mapper.Map<ClienteResponseContract>(Cliente);
+            cliente = await _clienteRepository.Atualizar(cliente);
+            return _mapper.Map<ClienteResponseContract>(cliente);
 
         }
 
         public async Task Inativar(int id, int idUsuario)
         {
-            var Cliente = await _clienteRepository.ObterPorId(id) ?? throw new NotFoundException("Cliente não encotrada para deletar.");
-            await _clienteRepository.Deletar(_mapper.Map<Cliente>(Cliente));
+            Cliente cliente = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            await _clienteRepository.Deletar(cliente);
         }
 
         public async Task<ClienteResponseContract> ObterPorId(int id, int idUsuario)
         {
-            var Cliente = await _clienteRepository.ObterPorId(id);
-            return _mapper.Map<ClienteResponseContract>(Cliente);
+            Cliente cliente = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            return _mapper.Map<ClienteResponseContract>(cliente);
         }
 
         public async Task<IEnumerable<ClienteResponseContract>> ObterTodos(int idUsuario)
         {
-            var despesas = await _clienteRepository.ObterTodos();
-            return despesas.Select(_mapper.Map<ClienteResponseContract>);
+            var cliente = await _clienteRepository.ObeterPeloIdUsuario(idUsuario);
+            return cliente.Select(_mapper.Map<ClienteResponseContract>);
+        }
+
+        private async Task<Cliente> ObterPorIdVinculadoAoIdUsuario(int id, int usuarioId)
+        {
+            var cliente = await _clienteRepository.ObterPorId(id);
+            if (cliente is null || cliente.UsuarioId != usuarioId)
+            {
+                throw new NotFoundException($"Não foi encontrada nenhum usuário pelo id fornecido {id}");
+            }
+
+            return cliente;
         }
 
     }

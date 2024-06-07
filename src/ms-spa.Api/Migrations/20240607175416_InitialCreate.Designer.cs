@@ -12,8 +12,8 @@ using ms_spa.Api.Data;
 namespace ms_spa.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240606203726_initialMigration")]
-    partial class initialMigration
+    [Migration("20240607175416_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,9 @@ namespace ms_spa.Api.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR");
 
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("timestamp");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("VARCHAR");
@@ -57,7 +60,7 @@ namespace ms_spa.Api.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -140,7 +143,9 @@ namespace ms_spa.Api.Migrations
                 {
                     b.HasOne("ms_spa.Api.Domain.Models.Usuario", "Usuario")
                         .WithMany("Clientes")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
