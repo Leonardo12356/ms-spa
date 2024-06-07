@@ -69,7 +69,7 @@ namespace ms_spa.Api.Domain.Services.Classes
         public async Task<IEnumerable<UsuarioResponseContract>> ObterTodos(int idUsuario)
         {
             var usuarios = await _usuarioRepository.ObterTodos();
-            return usuarios.Select(usuario => _mapper.Map<UsuarioResponseContract>(usuario));
+            return usuarios.Select(_mapper.Map<UsuarioResponseContract>);
         }
 
         public async Task<UsuarioResponseContract> ObterPorId(int id, int idUsuario)

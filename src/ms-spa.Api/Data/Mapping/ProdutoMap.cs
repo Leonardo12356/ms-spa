@@ -37,6 +37,8 @@ namespace ms_spa.Api.Data.Mapping
             builder.HasOne(p => p.Cliente)
                 .WithMany()
                 .HasForeignKey(p => p.ClienteId);
+
+            builder.HasQueryFilter(p => p.Cliente.DataInativacao == null);
         }
     }
 }

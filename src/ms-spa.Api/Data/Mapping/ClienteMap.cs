@@ -34,6 +34,9 @@ namespace ms_spa.Api.Data.Mapping
             builder.Property(c => c.Observacao)
                 .HasColumnType(varchar);
 
+            builder.Property(p => p.DataInativacao)
+            .HasColumnType("timestamp");
+
             builder.HasOne(c => c.Usuario)
                 .WithMany(u => u.Clientes)
                 .HasForeignKey(c => c.UsuarioId);
@@ -41,6 +44,8 @@ namespace ms_spa.Api.Data.Mapping
             builder.HasMany(c => c.Produtos)
                 .WithOne(p => p.Cliente)
                 .HasForeignKey(p => p.ClienteId);
+
+            builder.HasQueryFilter(c => c.DataInativacao == null);
         }
     }
 }

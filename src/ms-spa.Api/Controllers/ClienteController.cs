@@ -1,25 +1,25 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ms_spa.Api.Contract.Produto;
+using ms_spa.Api.Contract.Cliente;
 using ms_spa.Api.Domain.Services.Interfaces;
 using ms_spa.Api.Exceptions;
 
 namespace ms_spa.Api.Controllers
 {
     [ApiController]
-    [Route("produto")]
-    public class ProdutoController(IService<ProdutoRequestContract, ProdutoResponseContract, int> produtoService) : BaseController
+    [Route("cliente")]
+    public class ClienteController(IService<ClienteRequestContract, ClienteResponseContract, int> clienteService) : BaseController
     {
-        private readonly IService<ProdutoRequestContract, ProdutoResponseContract, int> _produtoService = produtoService;
+        private readonly IService<ClienteRequestContract, ClienteResponseContract, int> _clienteService = clienteService;
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Adicionar(ProdutoRequestContract contrato)
+        public async Task<IActionResult> Adicionar(ClienteRequestContract contrato)
         {
             try
             {
                 _idUsuario = ObterIdUsuarioLogado();
-                return Created("", await _produtoService.Adicionar(contrato, _idUsuario));
+                return Created("", await _clienteService.Adicionar(contrato, _idUsuario));
             }
             catch (BadRequestException ex)
             {
@@ -39,7 +39,7 @@ namespace ms_spa.Api.Controllers
             try
             {
                 _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.ObterTodos(_idUsuario));
+                return Ok(await _clienteService.ObterTodos(_idUsuario));
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace ms_spa.Api.Controllers
             try
             {
                 _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.ObterPorId(id, _idUsuario));
+                return Ok(await _clienteService.ObterPorId(id, _idUsuario));
             }
             catch (NotFoundException ex)
             {
@@ -72,12 +72,12 @@ namespace ms_spa.Api.Controllers
         [HttpPut]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Atualizar(int id, ProdutoRequestContract contrato)
+        public async Task<IActionResult> Atualizar(int id, ClienteRequestContract contrato)
         {
             try
             {
                 _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.Atualizar(id, contrato, _idUsuario));
+                return Ok(await _clienteService.Atualizar(id, contrato, _idUsuario));
             }
             catch (NotFoundException ex)
             {
@@ -102,7 +102,7 @@ namespace ms_spa.Api.Controllers
             try
             {
                 _idUsuario = ObterIdUsuarioLogado();
-                await _produtoService.Inativar(id, _idUsuario);
+                await _clienteService.Inativar(id, _idUsuario);
                 return NoContent();
             }
             catch (NotFoundException ex)

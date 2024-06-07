@@ -15,7 +15,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "spa-db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new ProdutoRepository(context);
             var produto = new Produto
             {
@@ -44,7 +44,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "atualizar_Produto_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new ProdutoRepository(context);
             var produto = new Produto
             {
@@ -76,7 +76,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "deletar_Produto_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new ProdutoRepository(context);
             var produto = new Produto
             {
@@ -108,7 +108,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "obter_Produto_id_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new ProdutoRepository(context);
             var produto = new Produto
             {
@@ -139,7 +139,7 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 .UseInMemoryDatabase(databaseName: "obter_todos_Produtos_db")
                 .Options;
 
-            using var context = new AppDbContext(options);
+            var context = new AppDbContext(options);
             var repository = new ProdutoRepository(context);
             await repository.Adicionar(new Produto
             {

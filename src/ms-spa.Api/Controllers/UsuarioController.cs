@@ -1,3 +1,4 @@
+using System.Security.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ms_spa.Api.Contract.Usuario;
@@ -13,7 +14,30 @@ namespace ms_spa.Api.Controllers
         private readonly IUsuarioService _usuarioService = usuarioService;
 
         [HttpPost]
-        [Authorize]
+        [Route("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Autenticacao(UsuarioLoginRequestContract contrato)
+        {
+            try
+            {
+                return Ok(await _usuarioService.Autenticar(contrato));
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(RetornarModelNotFound(ex));
+            }
+            catch (AuthenticationException ex)
+            {
+                return Unauthorized(RetornarModelUnauthorized(ex));
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        // [Authorize]
         public async Task<IActionResult> Adicionar(UsuarioRequestContract contrato)
         {
             try

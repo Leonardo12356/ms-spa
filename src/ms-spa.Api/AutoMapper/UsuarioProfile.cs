@@ -8,8 +8,8 @@ namespace ms_spa.Api.AutoMapper
     {
         public UsuarioProfile()
         {
-            CreateMap<Usuario, UsuarioLoginRequestContract>().ReverseMap();
-            CreateMap<Usuario, UsuarioLoginResponseContract>().ReverseMap();
+            CreateMap<Usuario, UsuarioRequestContract>().ReverseMap();
+            CreateMap<Usuario, UsuarioResponseContract>().ReverseMap();
         }
     }
 }
