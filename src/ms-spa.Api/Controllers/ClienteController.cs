@@ -10,7 +10,7 @@ namespace ms_spa.Api.Controllers
     [Route("cliente")]
     public class ClienteController(IClienteService clienteService) : BaseController
     {
-        private readonly IService<ClienteRequestContract, ClienteResponseContract, int> _clienteService = clienteService;
+        private readonly IClienteService _clienteService = clienteService;
 
         [HttpPost]
         [Authorize]
@@ -114,6 +114,13 @@ namespace ms_spa.Api.Controllers
 
                 return Problem(ex.Message);
             }
+        }
+
+        [HttpGet("quantidade-total-clientes")]
+        public async Task<IActionResult> ObterQuantidadeTotalDeClientes()
+        {
+            var quantidade = await _clienteService.ObterQuantidadeTotalDeClientes();
+            return Ok(quantidade);
         }
 
     }

@@ -23,6 +23,7 @@ namespace ms_spa.Api.Domain.Services.Classes
         public async Task<ClienteResponseContract> Atualizar(int id, ClienteRequestContract entidade, int idUsuario)
         {
             Cliente cliente = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            _mapper.Map(entidade, cliente);
 
             cliente = await _clienteRepository.Atualizar(cliente);
             return _mapper.Map<ClienteResponseContract>(cliente);
@@ -41,9 +42,15 @@ namespace ms_spa.Api.Domain.Services.Classes
             return _mapper.Map<ClienteResponseContract>(cliente);
         }
 
+        public async Task<int> ObterQuantidadeTotalDeClientes()
+        {
+            var clientes = await _clienteRepository.ObterTodos();
+            return clientes.Count();
+        }
+
         public async Task<IEnumerable<ClienteResponseContract>> ObterTodos(int idUsuario)
         {
-            var cliente = await _clienteRepository.ObeterPeloIdUsuario(idUsuario);
+            var cliente = await _clienteRepository.ObeterPeloIdVinculadoAoUsuario(idUsuario);
             return cliente.Select(_mapper.Map<ClienteResponseContract>);
         }
 

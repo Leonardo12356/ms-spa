@@ -244,7 +244,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             };
 
             _clienteRepositoryMock
-                .Setup(r => r.ObeterPeloIdUsuario(It.IsAny<int>()))
+                .Setup(r => r.ObeterPeloIdVinculadoAoUsuario(It.IsAny<int>()))
                 .ReturnsAsync(clienteModels);
 
             _mapperMock
