@@ -116,11 +116,19 @@ namespace ms_spa.Api.Controllers
             }
         }
 
-        [HttpGet("quantidade-total-clientes")]
+        [HttpGet]
+        [Route("clientes/quantidade-total")]
+        [AllowAnonymous]
         public async Task<IActionResult> ObterQuantidadeTotalDeClientes()
         {
-            var quantidade = await _clienteService.ObterQuantidadeTotalDeClientes();
-            return Ok(quantidade);
+            try
+            {
+                return Ok(await _clienteService.ObterQuantidadeTotalDeClientes());
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
     }
