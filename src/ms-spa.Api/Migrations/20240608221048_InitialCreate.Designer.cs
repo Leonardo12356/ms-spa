@@ -12,7 +12,7 @@ using ms_spa.Api.Data;
 namespace ms_spa.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240607175416_InitialCreate")]
+    [Migration("20240608221048_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

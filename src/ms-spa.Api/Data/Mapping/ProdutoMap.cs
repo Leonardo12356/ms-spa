@@ -35,7 +35,7 @@ namespace ms_spa.Api.Data.Mapping
                 .IsRequired();
 
             builder.HasOne(p => p.Cliente)
-                .WithMany()
+                .WithMany(p => p.Produtos)
                 .HasForeignKey(p => p.ClienteId);
 
             builder.HasQueryFilter(p => p.Cliente.DataInativacao == null);

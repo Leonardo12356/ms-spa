@@ -37,7 +37,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorCusto = 50.0,
                 ValorVenda = 75.0,
                 Observacao = "Produto ",
-                ClienteId = 1
+
             };
             var produtoModel = new Produto
             {
@@ -87,7 +87,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorCusto = 55.0,
                 ValorVenda = 80.0,
                 Observacao = "Produto",
-                ClienteId = 1
+
             };
             var produtoModel = new Produto
             {

@@ -40,8 +40,7 @@ namespace ms_spa.Api.Domain.Repository.Classes
 
         public async Task Deletar(Usuario entidade)
         {
-
-            _context.Entry(entidade).State = EntityState.Deleted;
+            _context.Remove(entidade);
             await _context.SaveChangesAsync();
         }
 

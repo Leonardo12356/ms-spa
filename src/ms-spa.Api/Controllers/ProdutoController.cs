@@ -10,7 +10,7 @@ namespace ms_spa.Api.Controllers
     [Route("produto")]
     public class ProdutoController(IProdutoService produtoService) : BaseController
     {
-        private readonly IService<ProdutoRequestContract, ProdutoResponseContract, int> _produtoService = produtoService;
+        private readonly IProdutoService _produtoService = produtoService;
 
         [HttpPost]
         [Authorize]
@@ -112,6 +112,51 @@ namespace ms_spa.Api.Controllers
             catch (Exception ex)
             {
 
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("produtos/maior-estoque")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObterProdutosComMaiorEstoque(int quantidade = 10)
+        {
+            try
+            {
+                return Ok(await _produtoService.ObterProdutosComMaiorEstoque(quantidade));
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("produtos/estoque-zerado-negativo")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObterProdutosComEstoqueZeradoOuNegativo()
+        {
+            try
+            {
+                return Ok(await _produtoService.ObterProdutosComEstoqueZeradoOuNegativo());
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("produtos/quantidade-total")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObterQuantidadeTotalDeProdutos()
+        {
+            try
+            {
+                return Ok(await _produtoService.ObterQuantidadeTotalDeProdutos());
+            }
+            catch (Exception ex)
+            {
                 return Problem(ex.Message);
             }
         }

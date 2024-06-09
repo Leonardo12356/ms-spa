@@ -34,14 +34,13 @@ namespace ms_spa.Api.Domain.Repository.Classes
             }
             else
             {
-                throw new NotFoundException("O Usuário não foi localizado");
+                throw new NotFoundException("O Produto não foi localizado");
             }
         }
 
         public async Task Deletar(Produto entidade)
         {
-
-            _context.Entry(entidade).State = EntityState.Deleted;
+            _context.Remove(entidade);
             await _context.SaveChangesAsync();
         }
 
@@ -56,6 +55,14 @@ namespace ms_spa.Api.Domain.Repository.Classes
             return await _context.Produtos.AsNoTracking()
             .Where(u => u.Id == id)
             .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Produto>> ObeterPeloIdUsuario(int IdUsuario)
+        {
+            return await _context.Produtos.AsNoTracking()
+            .Where(c => c.ClienteId == IdUsuario)
+            .OrderBy(p => p.Id)
+            .ToListAsync();
         }
     }
 }

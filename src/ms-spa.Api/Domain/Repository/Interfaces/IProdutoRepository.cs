@@ -4,6 +4,6 @@ namespace ms_spa.Api.Domain.Repository.Interfaces
 {
     public interface IProdutoRepository : IRepository<Produto, int>
     {
-
+        Task<IEnumerable<Produto>> ObeterPeloIdUsuario(int IdUsuario);
     }
 }
