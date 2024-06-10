@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Moq;
 using ms_spa.Api.Contract;
 using ms_spa.Api.Contract.Usuario;

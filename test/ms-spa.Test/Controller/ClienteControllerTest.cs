@@ -19,18 +19,6 @@ namespace ms_spa.Test.Controller
         public ClienteControllerTest()
         {
             _controller = new ClienteController(_clienteServiceMock.Object);
-
-            var userClaims = new List<Claim>
-            {
-                new(ClaimTypes.NameIdentifier, "1")
-            };
-            var identity = new ClaimsIdentity(userClaims, "TestAuthType");
-            var clientePrincipal = new ClaimsPrincipal(identity);
-
-            _controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext { User = clientePrincipal }
-            };
         }
 
         [Fact]

@@ -19,18 +19,6 @@ namespace ms_spa.Test.Controller
         public ProdutoControllerTest()
         {
             _controller = new ProdutoController(_produtoServiceMock.Object);
-
-            var userClaims = new List<Claim>
-            {
-                new(ClaimTypes.NameIdentifier, "1")
-            };
-            var identity = new ClaimsIdentity(userClaims, "TestAuthType");
-            var ProdutoPrincipal = new ClaimsPrincipal(identity);
-
-            _controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext { User = ProdutoPrincipal }
-            };
         }
 
         [Fact]

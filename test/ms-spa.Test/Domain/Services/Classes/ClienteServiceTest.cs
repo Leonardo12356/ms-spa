@@ -1,10 +1,6 @@
-using System.Security.Cryptography;
-using System.Text;
 using AutoMapper;
-using Microsoft.Extensions.Configuration;
 using Moq;
 using ms_spa.Api.Contract.Cliente;
-using ms_spa.Api.Contract.Usuario;
 using ms_spa.Api.Domain.Models;
 using ms_spa.Api.Domain.Repository.Interfaces;
 using ms_spa.Api.Domain.Services.Classes;
