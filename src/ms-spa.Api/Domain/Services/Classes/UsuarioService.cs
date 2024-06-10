@@ -33,7 +33,7 @@ namespace ms_spa.Api.Domain.Services.Classes
             };
         }
 
-        public async Task<UsuarioResponseContract> Adicionar(UsuarioRequestContract entidade, int idUsuario)
+        public async Task<UsuarioResponseContract> Adicionar(UsuarioRequestContract entidade)
         {
             var usuario = _mapper.Map<Usuario>(entidade);
 
@@ -46,9 +46,9 @@ namespace ms_spa.Api.Domain.Services.Classes
 
         }
 
-        public async Task<UsuarioResponseContract> Atualizar(int id, UsuarioRequestContract entidade, int idUsuario)
+        public async Task<UsuarioResponseContract> Atualizar(int id, UsuarioRequestContract entidade)
         {
-            _ = await ObterTodos(id) ?? throw new NotFoundException("Usuário não encontrado para atualização.");
+            _ = await ObterPorId(id) ?? throw new NotFoundException("Usuário não encontrado para atualização.");
 
             var usuario = _mapper.Map<Usuario>(entidade);
             usuario.Id = id;
@@ -60,19 +60,19 @@ namespace ms_spa.Api.Domain.Services.Classes
 
         }
 
-        public async Task Inativar(int id, int idUsuario)
+        public async Task Inativar(int id)
         {
             var usuario = await _usuarioRepository.ObterPorId(id) ?? throw new NotFoundException("Usuário não encontrado para inativação.");
             await _usuarioRepository.Deletar(_mapper.Map<Usuario>(usuario));
         }
 
-        public async Task<IEnumerable<UsuarioResponseContract>> ObterTodos(int idUsuario)
+        public async Task<IEnumerable<UsuarioResponseContract>> ObterTodos()
         {
             var usuarios = await _usuarioRepository.ObterTodos();
             return usuarios.Select(_mapper.Map<UsuarioResponseContract>);
         }
 
-        public async Task<UsuarioResponseContract> ObterPorId(int id, int idUsuario)
+        public async Task<UsuarioResponseContract> ObterPorId(int id)
         {
             var usuario = await _usuarioRepository.ObterPorId(id);
             return _mapper.Map<UsuarioResponseContract>(usuario);
@@ -93,5 +93,7 @@ namespace ms_spa.Api.Domain.Services.Classes
 
             return hashSenha;
         }
+
+
     }
 }

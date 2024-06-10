@@ -19,25 +19,13 @@ namespace ms_spa.Test.Controller
         public ProdutoControllerTest()
         {
             _controller = new ProdutoController(_produtoServiceMock.Object);
-
-            var userClaims = new List<Claim>
-            {
-                new(ClaimTypes.NameIdentifier, "1")
-            };
-            var identity = new ClaimsIdentity(userClaims, "TestAuthType");
-            var ProdutoPrincipal = new ClaimsPrincipal(identity);
-
-            _controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext { User = ProdutoPrincipal }
-            };
         }
 
         [Fact]
         public async Task Adicionar_DeveRetornarCreatedResult()
         {
             // Arrange
-            _produtoServiceMock.Setup(service => service.Adicionar(It.IsAny<ProdutoRequestContract>(), It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.Adicionar(It.IsAny<ProdutoRequestContract>()))
                 .ReturnsAsync(new ProdutoResponseContract());
 
             // Act
@@ -53,7 +41,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var mensagemDeErro = "Mensagem de erro";
-            _produtoServiceMock.Setup(service => service.Adicionar(It.IsAny<ProdutoRequestContract>(), It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.Adicionar(It.IsAny<ProdutoRequestContract>()))
                                .ThrowsAsync(new BadRequestException(mensagemDeErro));
 
             // Act
@@ -74,7 +62,7 @@ namespace ms_spa.Test.Controller
         public async Task Atualizar_DeveRetornarOkResult()
         {
             // Arrange
-            _produtoServiceMock.Setup(service => service.Atualizar(It.IsAny<int>(), It.IsAny<ProdutoRequestContract>(), It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.Atualizar(It.IsAny<int>(), It.IsAny<ProdutoRequestContract>()))
                                .ReturnsAsync(new ProdutoResponseContract());
 
             // Act
@@ -90,7 +78,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var ProdutoId = 1;
             var mensagemDeErro = "Produto não encontrado";
-            _produtoServiceMock.Setup(service => service.Atualizar(ProdutoId, It.IsAny<ProdutoRequestContract>(), It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.Atualizar(ProdutoId, It.IsAny<ProdutoRequestContract>()))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act
@@ -110,7 +98,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var ProdutoId = 1;
             var ProdutoResponse = new ProdutoResponseContract();
-            _produtoServiceMock.Setup(service => service.ObterPorId(ProdutoId, It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.ObterPorId(ProdutoId))
                                .ReturnsAsync(ProdutoResponse);
 
             // Act
@@ -128,7 +116,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var ProdutoId = 1;
             var mensagemDeErro = "Produto não encontrado";
-            _produtoServiceMock.Setup(service => service.ObterPorId(ProdutoId, It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.ObterPorId(ProdutoId))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act
@@ -147,7 +135,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var ProdutosResponse = new List<ProdutoResponseContract>();
-            _produtoServiceMock.Setup(service => service.ObterTodos(It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.ObterTodos())
                                .ReturnsAsync(ProdutosResponse);
 
             // Act
@@ -164,7 +152,7 @@ namespace ms_spa.Test.Controller
         public async Task ObterTodos_DeveRetornarProblemaQuandoFalha()
         {
             // Arrange
-            _produtoServiceMock.Setup(service => service.ObterTodos(It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.ObterTodos())
                                .ThrowsAsync(new Exception("Erro ao obter Produtos"));
 
             // Act
@@ -180,7 +168,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var ProdutoId = 1;
-            _produtoServiceMock.Setup(service => service.Inativar(ProdutoId, It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.Inativar(ProdutoId))
                                .Returns(Task.CompletedTask);
 
             // Act
@@ -196,7 +184,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var ProdutoId = 1;
             var mensagemDeErro = "Produto não encontrado";
-            _produtoServiceMock.Setup(service => service.Inativar(ProdutoId, It.IsAny<int>()))
+            _produtoServiceMock.Setup(service => service.Inativar(ProdutoId))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act

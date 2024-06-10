@@ -58,7 +58,7 @@ namespace ms_spa.Api.Domain.Repository.Classes
             .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Cliente>> ObeterPeloIdUsuario(int IdUsuario)
+        public async Task<IEnumerable<Cliente>> ObeterPeloIdVinculadoAoUsuario(int IdUsuario)
         {
             return await _context.Clientes.AsNoTracking()
             .Where(c => c.UsuarioId == IdUsuario)

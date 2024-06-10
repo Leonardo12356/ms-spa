@@ -4,6 +4,6 @@ namespace ms_spa.Api.Domain.Services.Interfaces
 {
     public interface IClienteService : IService<ClienteRequestContract, ClienteResponseContract, int>
     {
-
+        Task<int> ObterQuantidadeTotalDeClientes();
     }
 }

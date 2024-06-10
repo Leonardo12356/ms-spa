@@ -89,7 +89,7 @@ static void ConfigurarServices(WebApplicationBuilder builder)
             }
         });
 
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControleFacil.Api", Version = "v1" });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "ms-spa.Api", Version = "v1" });
     });
 
     builder.Services.AddAuthentication(x =>
