@@ -37,7 +37,7 @@ namespace ms_spa.Test.Controller
         public async Task Adicionar_DeveRetornarCreatedResult()
         {
             // Arrange
-            _clienteServiceMock.Setup(service => service.Adicionar(It.IsAny<ClienteRequestContract>(), It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.Adicionar(It.IsAny<ClienteRequestContract>()))
                 .ReturnsAsync(new ClienteResponseContract());
 
             // Act
@@ -53,7 +53,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var mensagemDeErro = "Mensagem de erro";
-            _clienteServiceMock.Setup(service => service.Adicionar(It.IsAny<ClienteRequestContract>(), It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.Adicionar(It.IsAny<ClienteRequestContract>()))
                                .ThrowsAsync(new BadRequestException(mensagemDeErro));
 
             // Act
@@ -74,7 +74,7 @@ namespace ms_spa.Test.Controller
         public async Task Atualizar_DeveRetornarOkResult()
         {
             // Arrange
-            _clienteServiceMock.Setup(service => service.Atualizar(It.IsAny<int>(), It.IsAny<ClienteRequestContract>(), It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.Atualizar(It.IsAny<int>(), It.IsAny<ClienteRequestContract>()))
                                .ReturnsAsync(new ClienteResponseContract());
 
             // Act
@@ -90,7 +90,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var clienteId = 1;
             var mensagemDeErro = "Cliente não encontrado";
-            _clienteServiceMock.Setup(service => service.Atualizar(clienteId, It.IsAny<ClienteRequestContract>(), It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.Atualizar(clienteId, It.IsAny<ClienteRequestContract>()))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act
@@ -110,7 +110,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var clienteId = 1;
             var clienteResponse = new ClienteResponseContract();
-            _clienteServiceMock.Setup(service => service.ObterPorId(clienteId, It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.ObterPorId(clienteId))
                                .ReturnsAsync(clienteResponse);
 
             // Act
@@ -128,7 +128,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var clienteId = 1;
             var mensagemDeErro = "Cliente não encontrado";
-            _clienteServiceMock.Setup(service => service.ObterPorId(clienteId, It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.ObterPorId(clienteId))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act
@@ -147,7 +147,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var clientesResponse = new List<ClienteResponseContract>();
-            _clienteServiceMock.Setup(service => service.ObterTodos(It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.ObterTodos())
                                .ReturnsAsync(clientesResponse);
 
             // Act
@@ -164,7 +164,7 @@ namespace ms_spa.Test.Controller
         public async Task ObterTodos_DeveRetornarProblemaQuandoFalha()
         {
             // Arrange
-            _clienteServiceMock.Setup(service => service.ObterTodos(It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.ObterTodos())
                                .ThrowsAsync(new Exception("Erro ao obter clientes"));
 
             // Act
@@ -180,7 +180,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var clienteId = 1;
-            _clienteServiceMock.Setup(service => service.Inativar(clienteId, It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.Inativar(clienteId))
                                .Returns(Task.CompletedTask);
 
             // Act
@@ -196,7 +196,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var clienteId = 1;
             var mensagemDeErro = "Cliente não encontrado";
-            _clienteServiceMock.Setup(service => service.Inativar(clienteId, It.IsAny<int>()))
+            _clienteServiceMock.Setup(service => service.Inativar(clienteId))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act

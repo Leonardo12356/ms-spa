@@ -18,8 +18,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                return Created("", await _produtoService.Adicionar(contrato, _idUsuario));
+                return Created("", await _produtoService.Adicionar(contrato));
             }
             catch (BadRequestException ex)
             {
@@ -38,8 +37,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.ObterTodos(_idUsuario));
+                return Ok(await _produtoService.ObterTodos());
             }
             catch (Exception ex)
             {
@@ -55,8 +53,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.ObterPorId(id, _idUsuario));
+                return Ok(await _produtoService.ObterPorId(id));
             }
             catch (NotFoundException ex)
             {
@@ -76,8 +73,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.Atualizar(id, contrato, _idUsuario));
+                return Ok(await _produtoService.Atualizar(id, contrato));
             }
             catch (NotFoundException ex)
             {
@@ -101,8 +97,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                await _produtoService.Inativar(id, _idUsuario);
+                await _produtoService.Inativar(id);
                 return NoContent();
             }
             catch (NotFoundException ex)

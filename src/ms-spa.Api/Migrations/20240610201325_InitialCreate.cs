@@ -35,14 +35,14 @@ namespace ms_spa.Api.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UsuarioId = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "VARCHAR", nullable: false),
                     Email = table.Column<string>(type: "VARCHAR", nullable: false),
                     Cpf = table.Column<string>(type: "VARCHAR", nullable: false),
                     Telefone = table.Column<string>(type: "VARCHAR", nullable: false),
                     Endereco = table.Column<string>(type: "VARCHAR", nullable: false),
                     Observacao = table.Column<string>(type: "VARCHAR", nullable: false),
-                    DataInativacao = table.Column<DateTime>(type: "timestamp", nullable: true)
+                    DataInativacao = table.Column<DateTime>(type: "timestamp", nullable: true),
+                    UsuarioId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

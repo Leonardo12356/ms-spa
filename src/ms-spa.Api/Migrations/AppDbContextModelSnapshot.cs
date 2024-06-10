@@ -149,11 +149,9 @@ namespace ms_spa.Api.Migrations
 
             modelBuilder.Entity("ms_spa.Api.Domain.Models.Produto", b =>
                 {
-                    b.HasOne("ms_spa.Api.Domain.Models.Cliente", "Cliente")
+                    b.HasOne("ms_spa.Api.Domain.Models.Cliente", null)
                         .WithMany("Produtos")
                         .HasForeignKey("ClienteId");
-
-                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("ms_spa.Api.Domain.Models.Cliente", b =>

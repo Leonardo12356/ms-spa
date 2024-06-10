@@ -8,6 +8,7 @@ namespace ms_spa.Api.Contract.Cliente
         public string Telefone { get; set; } = string.Empty;
         public string Endereco { get; set; } = string.Empty;
         public string Observacao { get; set; } = string.Empty;
+        public int UsuarioId { get; set; }
 
     }
 }

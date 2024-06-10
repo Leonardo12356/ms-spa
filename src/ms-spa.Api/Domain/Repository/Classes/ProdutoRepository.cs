@@ -57,12 +57,5 @@ namespace ms_spa.Api.Domain.Repository.Classes
             .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Produto>> ObeterPeloIdUsuario(int IdUsuario)
-        {
-            return await _context.Produtos.AsNoTracking()
-            .Where(c => c.ClienteId == IdUsuario)
-            .OrderBy(p => p.Id)
-            .ToListAsync();
-        }
     }
 }

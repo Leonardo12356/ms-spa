@@ -12,7 +12,7 @@ using ms_spa.Api.Data;
 namespace ms_spa.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240610015109_InitialCreate")]
+    [Migration("20240610201325_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -152,11 +152,9 @@ namespace ms_spa.Api.Migrations
 
             modelBuilder.Entity("ms_spa.Api.Domain.Models.Produto", b =>
                 {
-                    b.HasOne("ms_spa.Api.Domain.Models.Cliente", "Cliente")
+                    b.HasOne("ms_spa.Api.Domain.Models.Cliente", null)
                         .WithMany("Produtos")
                         .HasForeignKey("ClienteId");
-
-                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("ms_spa.Api.Domain.Models.Cliente", b =>

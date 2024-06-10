@@ -15,16 +15,14 @@ namespace ms_spa.Test.Domain.Services.Classes
     public class ProdutoServiceTest
     {
         private readonly Mock<IProdutoRepository> _produtoRepositoryMock;
-        private readonly Mock<IClienteRepository> _clienteRepositoryMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly ProdutoService _produtoService;
 
         public ProdutoServiceTest()
         {
             _produtoRepositoryMock = new Mock<IProdutoRepository>();
-            _clienteRepositoryMock = new Mock<IClienteRepository>();
             _mapperMock = new Mock<IMapper>();
-            _produtoService = new ProdutoService(_produtoRepositoryMock.Object, _mapperMock.Object, _clienteRepositoryMock.Object);
+            _produtoService = new ProdutoService(_produtoRepositoryMock.Object, _mapperMock.Object);
         }
 
 
@@ -49,7 +47,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorVenda = 7.000,
                 Observacao = "ESP LTD Gary-Holt",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
+
             };
             var produtoResponse = new ProdutoResponseContract
             {
@@ -60,17 +58,16 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorVenda = 7.000,
                 Observacao = "ESP LTD Gary-Holt",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
+
             };
 
             _mapperMock.Setup(m => m.Map<Produto>(request)).Returns(produtoModel);
             _produtoRepositoryMock.Setup(r => r.Adicionar(produtoModel)).ReturnsAsync(produtoModel);
-            _clienteRepositoryMock.Setup(c => c.ObterPorId(1)).ReturnsAsync(new Cliente { Id = 1 });
             _mapperMock.Setup(m => m.Map<ProdutoResponseContract>(produtoModel)).Returns(produtoResponse);
 
 
             // Act
-            var result = await _produtoService.Adicionar(request, 1);
+            var result = await _produtoService.Adicionar(request);
 
             // Assert
             Assert.NotNull(result);
@@ -100,7 +97,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorVenda = 7.000,
                 Observacao = "ESP LTD Gary-Holt",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
+
             };
             var produtoResponse = new ProdutoResponseContract
             {
@@ -111,7 +108,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorVenda = 7.000,
                 Observacao = "ESP LTD Gary-Holt",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
+
             };
 
             _mapperMock.Setup(m => m.Map<Produto>(request)).Returns(produtoModel);
@@ -120,7 +117,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _mapperMock.Setup(m => m.Map<ProdutoResponseContract>(produtoModel)).Returns(produtoResponse);
 
             // Act
-            var result = await _produtoService.Atualizar(id, request, 1);
+            var result = await _produtoService.Atualizar(id, request);
 
             // Assert
             Assert.NotNull(result);
@@ -142,13 +139,12 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorVenda = 75.0,
                 Observacao = "anti-caspa ",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
             };
 
             _produtoRepositoryMock.Setup(r => r.ObterPorId(id)).ReturnsAsync(produtoModel);
 
             // Act
-            await _produtoService.Inativar(id, 1);
+            await _produtoService.Inativar(id);
 
             // Assert
             _produtoRepositoryMock.Verify(r => r.Deletar(It.IsAny<Produto>()), Times.Once);
@@ -168,7 +164,6 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorVenda = 75.0,
                 Observacao = "anti-caspa ",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
             };
             var produtoResponse = new ProdutoResponseContract
             {
@@ -179,14 +174,13 @@ namespace ms_spa.Test.Domain.Services.Classes
                 ValorVenda = 75.0,
                 Observacao = "anti-caspa ",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
             };
 
             _produtoRepositoryMock.Setup(r => r.ObterPorId(id)).ReturnsAsync(produtoModel);
             _mapperMock.Setup(m => m.Map<ProdutoResponseContract>(produtoModel)).Returns(produtoResponse);
 
             // Act
-            var result = await _produtoService.ObterPorId(id, 1);
+            var result = await _produtoService.ObterPorId(id);
 
             // Assert
             Assert.NotNull(result);
@@ -207,7 +201,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                     ValorVenda = 5.000,
                     Observacao = "PS5 Slim",
                     DataCadastro = DateTime.Now,
-                    ClienteId = 1
+
                 },
                 new() {
                     Id = 2,
@@ -217,7 +211,6 @@ namespace ms_spa.Test.Domain.Services.Classes
                     ValorVenda = 5.000,
                     Observacao = "PS5 Fat",
                     DataCadastro = DateTime.Now,
-                    ClienteId = 2
                 }
             };
             var produtoResponses = new List<ProdutoResponseContract>
@@ -230,7 +223,7 @@ namespace ms_spa.Test.Domain.Services.Classes
                     ValorVenda = 5.000,
                     Observacao = "PS5 Slim",
                     DataCadastro = DateTime.Now,
-                    ClienteId = 1
+
                 },
                 new() {
                     Id = 2,
@@ -240,19 +233,86 @@ namespace ms_spa.Test.Domain.Services.Classes
                     ValorVenda = 5.000,
                     Observacao = "PS5 Fat",
                     DataCadastro = DateTime.Now,
-                    ClienteId = 2
                 }
             };
 
-            _produtoRepositoryMock.Setup(r => r.ObeterPeloIdUsuario(1)).ReturnsAsync(produtoModels);
+            _produtoRepositoryMock.Setup(r => r.ObterTodos()).ReturnsAsync(produtoModels);
             _mapperMock.Setup(m => m.Map<IEnumerable<ProdutoResponseContract>>(It.IsAny<IEnumerable<Produto>>())).Returns(produtoResponses);
 
             // Act
-            var result = await _produtoService.ObterTodos(1);
+            var result = await _produtoService.ObterTodos();
 
             // Assert
             Assert.NotNull(result);
             Assert.Equal(produtoResponses.Count, result.Count());
         }
+
+        [Fact]
+        public async Task ObterProdutosComMaiorEstoque_DeveRetornarProdutosOrdenadosPorQuantidade()
+        {
+            // Arrange
+            var produtos = new List<Produto>
+            {
+                new() { Id = 1, Nome = "Guitarra", QuantidadeEstoque = 50 },
+                new() { Id = 2, Nome = "PS5", QuantidadeEstoque = 100 },
+                new() { Id = 3, Nome = "PS5 Slim", QuantidadeEstoque = 75 },
+            };
+            _produtoRepositoryMock.Setup(repo => repo.ObterTodos()).ReturnsAsync(produtos);
+
+            // Act
+            var result = await _produtoService.ObterProdutosComMaiorEstoque(2);
+
+            // Assert
+            Assert.NotNull(result);
+            var resultList = result.ToList();
+            Assert.Equal(2, resultList.Count);
+            Assert.Equal(2, resultList[0].Id);
+            Assert.Equal(3, resultList[1].Id);
+        }
+
+        [Fact]
+        public async Task ObterProdutosComEstoqueZeradoOuNegativo_DeveRetornarProdutosComEstoqueZeroOuNegativo()
+        {
+            // Arrange
+            var produtos = new List<Produto>
+            {
+                new() { Id = 1, Nome = "Guitarra", QuantidadeEstoque = 0 },
+                new() { Id = 2, Nome = "PS5", QuantidadeEstoque = -10 },
+                new() { Id = 3, Nome = "PS5 Slim", QuantidadeEstoque = 5 },
+            };
+            _produtoRepositoryMock.Setup(repo => repo.ObterTodos()).ReturnsAsync(produtos);
+
+            // Act
+            var result = await _produtoService.ObterProdutosComEstoqueZeradoOuNegativo();
+
+            // Assert
+            Assert.NotNull(result);
+            var resultList = result.ToList();
+            Assert.Equal(2, resultList.Count);
+            Assert.Contains(resultList, p => p.Id == 1);
+            Assert.Contains(resultList, p => p.Id == 2);
+        }
+
+        [Fact]
+        public async Task ObterQuantidadeTotalDeProdutos_DeveRetornarQuantidadeTotalDeProdutos()
+        {
+            // Arrange
+            var produtos = new List<Produto>
+
+            {
+                new() { Id = 1, Nome = "Guitarra", QuantidadeEstoque = 50 },
+                new() { Id = 2, Nome = "PS5", QuantidadeEstoque = 100 },
+                new() { Id = 3, Nome = "PS5 Slim", QuantidadeEstoque = 75 },
+            };
+
+            _produtoRepositoryMock.Setup(repo => repo.ObterTodos()).ReturnsAsync(produtos);
+
+            // Act
+            var result = await _produtoService.ObterQuantidadeTotalDeProdutos();
+
+            // Assert
+            Assert.Equal(3, result);
+        }
     }
 }
+

@@ -23,7 +23,7 @@ namespace ms_spa.Test.Controller
         public async Task Adicionar_DeveRetornarCreatedResult()
         {
             // Arrange
-            _usuarioServiceMock.Setup(service => service.Adicionar(It.IsAny<UsuarioRequestContract>(), It.IsAny<int>()))
+            _usuarioServiceMock.Setup(service => service.Adicionar(It.IsAny<UsuarioRequestContract>()))
                 .ReturnsAsync(new UsuarioResponseContract());
 
             // Act
@@ -39,7 +39,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var mensagemDeErro = "Mensagem de erro";
-            _usuarioServiceMock.Setup(service => service.Adicionar(It.IsAny<UsuarioRequestContract>(), It.IsAny<int>()))
+            _usuarioServiceMock.Setup(service => service.Adicionar(It.IsAny<UsuarioRequestContract>()))
                                .ThrowsAsync(new BadRequestException(mensagemDeErro));
 
             // Act
@@ -60,7 +60,7 @@ namespace ms_spa.Test.Controller
         public async Task Atualizar_DeveRetornarOkResult()
         {
             // Arrange
-            _usuarioServiceMock.Setup(service => service.Atualizar(It.IsAny<int>(), It.IsAny<UsuarioRequestContract>(), It.IsAny<int>()))
+            _usuarioServiceMock.Setup(service => service.Atualizar(It.IsAny<int>(), It.IsAny<UsuarioRequestContract>()))
                                .ReturnsAsync(new UsuarioResponseContract());
 
             // Act
@@ -76,7 +76,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var despesaId = 1;
             var mensagemDeErro = "Despesa não encontrada";
-            _usuarioServiceMock.Setup(service => service.Atualizar(despesaId, It.IsAny<UsuarioRequestContract>(), 0))
+            _usuarioServiceMock.Setup(service => service.Atualizar(despesaId, It.IsAny<UsuarioRequestContract>()))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act
@@ -96,7 +96,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var despesaId = 1;
             var despesaResponse = new UsuarioResponseContract();
-            _usuarioServiceMock.Setup(service => service.ObterPorId(despesaId, 0))
+            _usuarioServiceMock.Setup(service => service.ObterPorId(despesaId))
                                .ReturnsAsync(despesaResponse);
 
             // Act
@@ -114,7 +114,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var despesaId = 1;
             var mensagemDeErro = "Despesa não encontrada";
-            _usuarioServiceMock.Setup(service => service.ObterPorId(despesaId, 0))
+            _usuarioServiceMock.Setup(service => service.ObterPorId(despesaId))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act
@@ -133,7 +133,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var usuariosResponse = new List<UsuarioResponseContract>();
-            _usuarioServiceMock.Setup(service => service.ObterTodos(0))
+            _usuarioServiceMock.Setup(service => service.ObterTodos())
                                .ReturnsAsync(usuariosResponse);
 
             // Act
@@ -150,7 +150,7 @@ namespace ms_spa.Test.Controller
         public async Task ObterTodos_DeveRetornarProblemaQuandoFalha()
         {
             // Arrange
-            _usuarioServiceMock.Setup(service => service.ObterTodos(0))
+            _usuarioServiceMock.Setup(service => service.ObterTodos())
                                .ThrowsAsync(new Exception("Erro ao obter usuários"));
 
             // Act
@@ -166,7 +166,7 @@ namespace ms_spa.Test.Controller
         {
             // Arrange
             var usuarioId = 1;
-            _usuarioServiceMock.Setup(service => service.Inativar(usuarioId, 0))
+            _usuarioServiceMock.Setup(service => service.Inativar(usuarioId))
                                .Returns(Task.CompletedTask);
 
             // Act
@@ -182,7 +182,7 @@ namespace ms_spa.Test.Controller
             // Arrange
             var usuarioId = 1;
             var mensagemDeErro = "Usuário não encontrado";
-            _usuarioServiceMock.Setup(service => service.Inativar(usuarioId, 0))
+            _usuarioServiceMock.Setup(service => service.Inativar(usuarioId))
                                .ThrowsAsync(new NotFoundException(mensagemDeErro));
 
             // Act

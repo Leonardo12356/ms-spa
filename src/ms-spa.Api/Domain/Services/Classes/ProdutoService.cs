@@ -7,27 +7,24 @@ using ms_spa.Api.Exceptions;
 
 namespace ms_spa.Api.Domain.Services.Classes
 {
-    public class ProdutoService(IProdutoRepository produtoRepository, IMapper mapper, IClienteRepository clienteRepository) : IProdutoService
+    public class ProdutoService(IProdutoRepository produtoRepository, IMapper mapper) : IProdutoService
     {
         private readonly IProdutoRepository _produtoRepository = produtoRepository;
-        private readonly IClienteRepository _clienteRepository = clienteRepository;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<ProdutoResponseContract> Adicionar(ProdutoRequestContract entidade, int idUsuario)
+        public async Task<ProdutoResponseContract> Adicionar(ProdutoRequestContract entidade)
         {
-            var cliente = await _clienteRepository.ObterPorId(idUsuario) ?? throw new NotFoundException("Cliente não encontrado para associar o produto.");
             var produto = _mapper.Map<Produto>(entidade);
             produto.DataCadastro = DateTime.Now;
-            produto.ClienteId = cliente.Id;
 
             var result = await _produtoRepository.Adicionar(produto);
             return _mapper.Map<ProdutoResponseContract>(result);
         }
 
 
-        public async Task<ProdutoResponseContract> Atualizar(int id, ProdutoRequestContract entidade, int idUsuario)
+        public async Task<ProdutoResponseContract> Atualizar(int id, ProdutoRequestContract entidade)
         {
-            await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            _ = await ObterPorId(id) ?? throw new NotFoundException("Usuário não encontrado para atualização.");
             var produto = _mapper.Map<Produto>(entidade);
             produto.Id = id;
 
@@ -36,34 +33,23 @@ namespace ms_spa.Api.Domain.Services.Classes
 
         }
 
-        public async Task Inativar(int id, int idUsuario)
+        public async Task Inativar(int id)
         {
-            var produto = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            var produto = await _produtoRepository.ObterPorId(id);
             await _produtoRepository.Deletar(_mapper.Map<Produto>(produto));
         }
 
-        public async Task<ProdutoResponseContract> ObterPorId(int id, int idUsuario)
+        public async Task<ProdutoResponseContract> ObterPorId(int id)
         {
-            var produto = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            var produto = await _produtoRepository.ObterPorId(id);
             return _mapper.Map<ProdutoResponseContract>(produto);
         }
 
 
-        public async Task<IEnumerable<ProdutoResponseContract>> ObterTodos(int idUsuario)
+        public async Task<IEnumerable<ProdutoResponseContract>> ObterTodos()
         {
-            var produtos = await _produtoRepository.ObeterPeloIdUsuario(idUsuario);
+            var produtos = await _produtoRepository.ObterTodos();
             return produtos.Select(_mapper.Map<ProdutoResponseContract>);
-        }
-
-        private async Task<Produto> ObterPorIdVinculadoAoIdUsuario(int id, int usuarioId)
-        {
-            var produto = await _produtoRepository.ObterPorId(id);
-            if (produto is null || produto.ClienteId != usuarioId)
-            {
-                throw new NotFoundException($"Não foi encontrada nenhum usuário pelo id fornecido {id}");
-            }
-
-            return produto;
         }
 
         public async Task<IEnumerable<ProdutoResponseContract>> ObterProdutosComMaiorEstoque(int quantidade)
@@ -80,7 +66,6 @@ namespace ms_spa.Api.Domain.Services.Classes
                                ValorVenda = p.ValorVenda,
                                Observacao = p.Observacao,
                                DataCadastro = p.DataCadastro,
-                               ClienteId = p.ClienteId
                            });
         }
         public async Task<IEnumerable<ProdutoResponseContract>> ObterProdutosComEstoqueZeradoOuNegativo()
@@ -96,7 +81,6 @@ namespace ms_spa.Api.Domain.Services.Classes
                                 ValorVenda = p.ValorVenda,
                                 Observacao = p.Observacao,
                                 DataCadastro = p.DataCadastro,
-                                ClienteId = p.ClienteId
                             });
         }
 

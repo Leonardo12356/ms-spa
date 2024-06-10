@@ -56,7 +56,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _mapperMock.Setup(m => m.Map<UsuarioResponseContract>(usuarioModel)).Returns(usuarioResponse);
 
             // Act
-            var result = await _usuarioService.Adicionar(request, 1);
+            var result = await _usuarioService.Adicionar(request);
 
             // Assert
             Assert.NotNull(result);
@@ -96,7 +96,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _mapperMock.Setup(m => m.Map<UsuarioResponseContract>(usuarioModel)).Returns(usuarioResponse);
 
             // Act
-            var result = await _usuarioService.Atualizar(id, request, 1);
+            var result = await _usuarioService.Atualizar(id, request);
 
             // Assert
             Assert.NotNull(result);
@@ -114,7 +114,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _usuarioRepositoryMock.Setup(r => r.ObterPorId(id)).ReturnsAsync(usuarioModel);
 
             // Act
-            await _usuarioService.Inativar(id, 1);
+            await _usuarioService.Inativar(id);
 
             // Assert
             _usuarioRepositoryMock.Verify(r => r.Deletar(It.IsAny<Usuario>()), Times.Once);
@@ -143,7 +143,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _mapperMock.Setup(m => m.Map<UsuarioResponseContract>(usuarioModel)).Returns(usuarioResponse);
 
             // Act
-            var result = await _usuarioService.ObterPorId(id, 1);
+            var result = await _usuarioService.ObterPorId(id);
 
             // Assert
             Assert.NotNull(result);
@@ -184,7 +184,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _mapperMock.Setup(m => m.Map<IEnumerable<UsuarioResponseContract>>(It.IsAny<IEnumerable<Usuario>>())).Returns(usuarioResponses);
 
             // Act
-            var result = await _usuarioService.ObterTodos(1);
+            var result = await _usuarioService.ObterTodos();
 
             // Assert
             Assert.NotNull(result);

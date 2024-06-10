@@ -12,33 +12,40 @@ namespace ms_spa.Api.Domain.Services.Classes
         private readonly IClienteRepository _clienteRepository = clienteRepository;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<ClienteResponseContract> Adicionar(ClienteRequestContract entidade, int idUsuario)
+        public async Task<ClienteResponseContract> Adicionar(ClienteRequestContract entidade)
         {
             var cliente = _mapper.Map<Cliente>(entidade);
-            cliente.UsuarioId = idUsuario;
+
             cliente = await _clienteRepository.Adicionar(cliente);
             return _mapper.Map<ClienteResponseContract>(cliente);
         }
 
-        public async Task<ClienteResponseContract> Atualizar(int id, ClienteRequestContract entidade, int idUsuario)
+        public async Task<ClienteResponseContract> Atualizar(int id, ClienteRequestContract entidade)
         {
-            Cliente cliente = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
-            _mapper.Map(entidade, cliente);
+            _ = await ObterPorId(id) ?? throw new NotFoundException("Usuário não encontrado para atualização.");
+            var cliente = _mapper.Map<Cliente>(entidade);
+            cliente.Id = id;
 
             cliente = await _clienteRepository.Atualizar(cliente);
             return _mapper.Map<ClienteResponseContract>(cliente);
 
         }
 
-        public async Task Inativar(int id, int idUsuario)
+        public async Task Inativar(int id)
         {
-            Cliente cliente = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
-            await _clienteRepository.Deletar(cliente);
+            var cliente = await _clienteRepository.ObterPorId(id);
+            await _clienteRepository.Deletar(_mapper.Map<Cliente>(cliente));
         }
 
-        public async Task<ClienteResponseContract> ObterPorId(int id, int idUsuario)
+        public async Task<IEnumerable<ClienteResponseContract>> ObterTodos()
         {
-            Cliente cliente = await ObterPorIdVinculadoAoIdUsuario(id, idUsuario);
+            var clientes = await _clienteRepository.ObterTodos();
+            return clientes.Select(_mapper.Map<ClienteResponseContract>);
+        }
+
+        public async Task<ClienteResponseContract> ObterPorId(int id)
+        {
+            Cliente? cliente = await _clienteRepository.ObterPorId(id);
             return _mapper.Map<ClienteResponseContract>(cliente);
         }
 
@@ -48,22 +55,7 @@ namespace ms_spa.Api.Domain.Services.Classes
             return clientes.Count();
         }
 
-        public async Task<IEnumerable<ClienteResponseContract>> ObterTodos(int idUsuario)
-        {
-            var cliente = await _clienteRepository.ObeterPeloIdVinculadoAoUsuario(idUsuario);
-            return cliente.Select(_mapper.Map<ClienteResponseContract>);
-        }
 
-        private async Task<Cliente> ObterPorIdVinculadoAoIdUsuario(int id, int usuarioId)
-        {
-            var cliente = await _clienteRepository.ObterPorId(id);
-            if (cliente is null || cliente.UsuarioId != usuarioId)
-            {
-                throw new NotFoundException($"Não foi encontrada nenhum usuário pelo id fornecido {id}");
-            }
-
-            return cliente;
-        }
 
     }
 }

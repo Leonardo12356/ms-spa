@@ -68,7 +68,7 @@ namespace ms_spa.Test.Domain.Services.Classes
 
 
             // Act
-            var result = await _clienteService.Adicionar(request, 1);
+            var result = await _clienteService.Adicionar(request);
 
             // Assert
             Assert.NotNull(result);
@@ -119,7 +119,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _mapperMock.Setup(m => m.Map<ClienteResponseContract>(ClienteModel)).Returns(clienteResponse);
 
             // Act
-            var result = await _clienteService.Atualizar(id, request, 1);
+            var result = await _clienteService.Atualizar(id, request);
 
             // Assert
             Assert.NotNull(result);
@@ -147,7 +147,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _clienteRepositoryMock.Setup(r => r.ObterPorId(id)).ReturnsAsync(ClienteModel);
 
             // Act
-            await _clienteService.Inativar(id, 1);
+            await _clienteService.Inativar(id);
 
             // Assert
             _clienteRepositoryMock.Verify(r => r.Deletar(It.IsAny<Cliente>()), Times.Once);
@@ -185,7 +185,7 @@ namespace ms_spa.Test.Domain.Services.Classes
             _mapperMock.Setup(m => m.Map<ClienteResponseContract>(ClienteModel)).Returns(ClienteResponse);
 
             // Act
-            var result = await _clienteService.ObterPorId(id, 1);
+            var result = await _clienteService.ObterPorId(id);
 
             // Assert
             Assert.NotNull(result);
@@ -243,20 +243,49 @@ namespace ms_spa.Test.Domain.Services.Classes
                 }
             };
 
-            _clienteRepositoryMock
-                .Setup(r => r.ObeterPeloIdVinculadoAoUsuario(It.IsAny<int>()))
-                .ReturnsAsync(clienteModels);
-
-            _mapperMock
-                .Setup(m => m.Map<IEnumerable<ClienteResponseContract>>(It.IsAny<IEnumerable<Cliente>>()))
-                .Returns(clienteResponses);
+            _clienteRepositoryMock.Setup(r => r.ObterTodos()).ReturnsAsync(clienteModels);
+            _mapperMock.Setup(m => m.Map<IEnumerable<ClienteResponseContract>>(It.IsAny<IEnumerable<Produto>>())).Returns(clienteResponses);
 
             // Act
-            var result = await _clienteService.ObterTodos(1);
+            var result = await _clienteService.ObterTodos();
 
             // Assert
             Assert.NotNull(result);
             Assert.Equal(clienteResponses.Count, result.Count());
         }
+
+        [Fact]
+        public async Task ObterQuantidadeTotalDeClientes_DeveRetornarQuantidadeTotalDeClientes()
+        {
+            // Arrange
+            var clientes = new List<Cliente>
+        {
+            new() { Id = 1, Nome = "Eu" },
+            new() { Id = 2, Nome = "Leo" },
+            new() { Id = 3, Nome = "Thais" },
+        };
+            _clienteRepositoryMock.Setup(repo => repo.ObterTodos()).ReturnsAsync(clientes);
+
+            // Act
+            var result = await _clienteService.ObterQuantidadeTotalDeClientes();
+
+            // Assert
+            Assert.Equal(3, result);
+        }
+
+        [Fact]
+        public async Task ObterQuantidadeTotalDeClientes_DeveRetornarZeroQuandoNaoHaClientes()
+        {
+            // Arrange
+            var clientes = new List<Cliente>();
+            _clienteRepositoryMock.Setup(repo => repo.ObterTodos()).ReturnsAsync(clientes);
+
+            // Act
+            var result = await _clienteService.ObterQuantidadeTotalDeClientes();
+
+            // Assert
+            Assert.Equal(0, result);
+        }
     }
 }
+
