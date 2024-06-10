@@ -75,7 +75,7 @@ namespace ms_spa.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClienteId")
+                    b.Property<int?>("ClienteId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("DataCadastro")
@@ -151,9 +151,7 @@ namespace ms_spa.Api.Migrations
                 {
                     b.HasOne("ms_spa.Api.Domain.Models.Cliente", "Cliente")
                         .WithMany("Produtos")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClienteId");
 
                     b.Navigation("Cliente");
                 });

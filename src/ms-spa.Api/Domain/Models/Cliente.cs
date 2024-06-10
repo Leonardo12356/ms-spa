@@ -23,6 +23,6 @@ namespace ms_spa.Api.Domain.Models
 
         public Usuario? Usuario { get; set; }
 
-        public ICollection<Produto> Produtos { get; set; } = new List<Produto>();
+        public IEnumerable<Produto> Produtos { get; set; } = new List<Produto>();
     }
 }

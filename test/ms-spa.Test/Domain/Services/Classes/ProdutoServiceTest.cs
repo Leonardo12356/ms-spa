@@ -15,14 +15,16 @@ namespace ms_spa.Test.Domain.Services.Classes
     public class ProdutoServiceTest
     {
         private readonly Mock<IProdutoRepository> _produtoRepositoryMock;
+        private readonly Mock<IClienteRepository> _clienteRepositoryMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly ProdutoService _produtoService;
 
         public ProdutoServiceTest()
         {
             _produtoRepositoryMock = new Mock<IProdutoRepository>();
+            _clienteRepositoryMock = new Mock<IClienteRepository>();
             _mapperMock = new Mock<IMapper>();
-            _produtoService = new ProdutoService(_produtoRepositoryMock.Object, _mapperMock.Object);
+            _produtoService = new ProdutoService(_produtoRepositoryMock.Object, _mapperMock.Object, _clienteRepositoryMock.Object);
         }
 
 
@@ -32,37 +34,38 @@ namespace ms_spa.Test.Domain.Services.Classes
             // Arrange
             var request = new ProdutoRequestContract
             {
-                Nome = "Produto ",
+                Nome = "Guitarra ",
                 QuantidadeEstoque = 10,
-                ValorCusto = 50.0,
-                ValorVenda = 75.0,
-                Observacao = "Produto ",
+                ValorCusto = 5.000,
+                ValorVenda = 7.000,
+                Observacao = "ESP LTD Gary-Holt",
 
             };
             var produtoModel = new Produto
             {
-                Nome = "Produto ",
+                Nome = "Guitarra ",
                 QuantidadeEstoque = 10,
-                ValorCusto = 50.0,
-                ValorVenda = 75.0,
-                Observacao = "Produto ",
+                ValorCusto = 5.000,
+                ValorVenda = 7.000,
+                Observacao = "ESP LTD Gary-Holt",
                 DataCadastro = DateTime.Now,
                 ClienteId = 1
             };
             var produtoResponse = new ProdutoResponseContract
             {
                 Id = 1,
-                Nome = "Produto ",
+                Nome = "Guitarra ",
                 QuantidadeEstoque = 10,
-                ValorCusto = 50.0,
-                ValorVenda = 75.0,
-                Observacao = "Produto",
-                DataCadastro = produtoModel.DataCadastro,
+                ValorCusto = 5.000,
+                ValorVenda = 7.000,
+                Observacao = "ESP LTD Gary-Holt",
+                DataCadastro = DateTime.Now,
                 ClienteId = 1
             };
 
             _mapperMock.Setup(m => m.Map<Produto>(request)).Returns(produtoModel);
             _produtoRepositoryMock.Setup(r => r.Adicionar(produtoModel)).ReturnsAsync(produtoModel);
+            _clienteRepositoryMock.Setup(c => c.ObterPorId(1)).ReturnsAsync(new Cliente { Id = 1 });
             _mapperMock.Setup(m => m.Map<ProdutoResponseContract>(produtoModel)).Returns(produtoResponse);
 
 
@@ -82,33 +85,32 @@ namespace ms_spa.Test.Domain.Services.Classes
             var id = 1;
             var request = new ProdutoRequestContract
             {
-                Nome = "Produto",
-                QuantidadeEstoque = 20,
-                ValorCusto = 55.0,
-                ValorVenda = 80.0,
-                Observacao = "Produto",
+                Nome = "Guitarra ",
+                QuantidadeEstoque = 10,
+                ValorCusto = 5.000,
+                ValorVenda = 7.000,
+                Observacao = "ESP LTD Gary-Holt",
 
             };
             var produtoModel = new Produto
             {
-                Id = id,
-                Nome = "Produto",
+                Nome = "Guitarra ",
                 QuantidadeEstoque = 10,
-                ValorCusto = 50.0,
-                ValorVenda = 75.0,
-                Observacao = "Produto",
+                ValorCusto = 5.000,
+                ValorVenda = 7.000,
+                Observacao = "ESP LTD Gary-Holt",
                 DataCadastro = DateTime.Now,
                 ClienteId = 1
             };
             var produtoResponse = new ProdutoResponseContract
             {
-                Id = id,
-                Nome = "Produto",
-                QuantidadeEstoque = 20,
-                ValorCusto = 55.0,
-                ValorVenda = 80.0,
-                Observacao = "Produto",
-                DataCadastro = produtoModel.DataCadastro,
+                Id = 1,
+                Nome = "Guitarra ",
+                QuantidadeEstoque = 10,
+                ValorCusto = 5.000,
+                ValorVenda = 7.000,
+                Observacao = "ESP LTD Gary-Holt",
+                DataCadastro = DateTime.Now,
                 ClienteId = 1
             };
 
@@ -134,11 +136,11 @@ namespace ms_spa.Test.Domain.Services.Classes
             var produtoModel = new Produto
             {
                 Id = id,
-                Nome = "Produto ",
+                Nome = "Shampo ",
                 QuantidadeEstoque = 10,
                 ValorCusto = 50.0,
                 ValorVenda = 75.0,
-                Observacao = "Produto",
+                Observacao = "anti-caspa ",
                 DataCadastro = DateTime.Now,
                 ClienteId = 1
             };
@@ -160,23 +162,23 @@ namespace ms_spa.Test.Domain.Services.Classes
             var produtoModel = new Produto
             {
                 Id = id,
-                Nome = "Produto ",
+                Nome = "Shampo ",
                 QuantidadeEstoque = 10,
                 ValorCusto = 50.0,
                 ValorVenda = 75.0,
-                Observacao = "Produto",
+                Observacao = "anti-caspa ",
                 DataCadastro = DateTime.Now,
                 ClienteId = 1
             };
             var produtoResponse = new ProdutoResponseContract
             {
                 Id = id,
-                Nome = "Produto",
+                Nome = "Shampo ",
                 QuantidadeEstoque = 10,
                 ValorCusto = 50.0,
                 ValorVenda = 75.0,
-                Observacao = "Produto",
-                DataCadastro = produtoModel.DataCadastro,
+                Observacao = "anti-caspa ",
+                DataCadastro = DateTime.Now,
                 ClienteId = 1
             };
 
@@ -199,21 +201,21 @@ namespace ms_spa.Test.Domain.Services.Classes
             {
                 new() {
                     Id = 1,
-                    Nome = "Produto 1",
+                    Nome = "P55",
                     QuantidadeEstoque = 10,
-                    ValorCusto = 50.0,
-                    ValorVenda = 75.0,
-                    Observacao = "Produto",
+                    ValorCusto = 4.000,
+                    ValorVenda = 5.000,
+                    Observacao = "PS5 Slim",
                     DataCadastro = DateTime.Now,
                     ClienteId = 1
                 },
                 new() {
                     Id = 2,
-                    Nome = "Produto",
+                    Nome = "PS5",
                     QuantidadeEstoque = 5,
-                    ValorCusto = 30.0,
-                    ValorVenda = 50.0,
-                    Observacao = "Produto 2",
+                    ValorCusto = 4.000,
+                    ValorVenda = 5.000,
+                    Observacao = "PS5 Fat",
                     DataCadastro = DateTime.Now,
                     ClienteId = 2
                 }
@@ -222,27 +224,27 @@ namespace ms_spa.Test.Domain.Services.Classes
             {
                 new() {
                     Id = 1,
-                    Nome = "Produto 1",
+                    Nome = "P55",
                     QuantidadeEstoque = 10,
-                    ValorCusto = 50.0,
-                    ValorVenda = 75.0,
-                    Observacao = "Produto 1",
-                    DataCadastro = produtoModels[0].DataCadastro,
+                    ValorCusto = 4.000,
+                    ValorVenda = 5.000,
+                    Observacao = "PS5 Slim",
+                    DataCadastro = DateTime.Now,
                     ClienteId = 1
                 },
                 new() {
                     Id = 2,
-                    Nome = "Produto 2",
+                    Nome = "PS5",
                     QuantidadeEstoque = 5,
-                    ValorCusto = 30.0,
-                    ValorVenda = 50.0,
-                    Observacao = "Produto 2",
-                    DataCadastro = produtoModels[1].DataCadastro,
+                    ValorCusto = 4.000,
+                    ValorVenda = 5.000,
+                    Observacao = "PS5 Fat",
+                    DataCadastro = DateTime.Now,
                     ClienteId = 2
                 }
             };
 
-            _produtoRepositoryMock.Setup(r => r.ObterTodos()).ReturnsAsync(produtoModels);
+            _produtoRepositoryMock.Setup(r => r.ObeterPeloIdUsuario(1)).ReturnsAsync(produtoModels);
             _mapperMock.Setup(m => m.Map<IEnumerable<ProdutoResponseContract>>(It.IsAny<IEnumerable<Produto>>())).Returns(produtoResponses);
 
             // Act

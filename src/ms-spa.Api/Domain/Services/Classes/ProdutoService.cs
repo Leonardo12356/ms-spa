@@ -7,20 +7,18 @@ using ms_spa.Api.Exceptions;
 
 namespace ms_spa.Api.Domain.Services.Classes
 {
-    public class ProdutoService(IProdutoRepository produtoRepository, IMapper mapper, IClienteRepository clienteRepository, IUsuarioRepository usuarioRepository) : IProdutoService
+    public class ProdutoService(IProdutoRepository produtoRepository, IMapper mapper, IClienteRepository clienteRepository) : IProdutoService
     {
         private readonly IProdutoRepository _produtoRepository = produtoRepository;
         private readonly IClienteRepository _clienteRepository = clienteRepository;
-        private readonly IUsuarioRepository _usuarioRepository = usuarioRepository;
         private readonly IMapper _mapper = mapper;
 
         public async Task<ProdutoResponseContract> Adicionar(ProdutoRequestContract entidade, int idUsuario)
         {
-            _ = await _clienteRepository.ObterPorId(idUsuario) ?? throw new NotFoundException("Cliente não encontrado para associar o produto.");
-
-            _ = await _clienteRepository.ObterPorId(idUsuario) ?? throw new NotFoundException("Cliente não encontrado para associar o produto.");
+            var cliente = await _clienteRepository.ObterPorId(idUsuario) ?? throw new NotFoundException("Cliente não encontrado para associar o produto.");
             var produto = _mapper.Map<Produto>(entidade);
             produto.DataCadastro = DateTime.Now;
+            produto.ClienteId = cliente.Id;
 
             var result = await _produtoRepository.Adicionar(produto);
             return _mapper.Map<ProdutoResponseContract>(result);

@@ -67,7 +67,7 @@ namespace ms_spa.Api.Migrations
                     ValorVenda = table.Column<double>(type: "double precision", nullable: false),
                     Observacao = table.Column<string>(type: "VARCHAR", nullable: false),
                     DataCadastro = table.Column<DateTime>(type: "timestamp", nullable: false),
-                    ClienteId = table.Column<int>(type: "integer", nullable: false)
+                    ClienteId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,8 +76,7 @@ namespace ms_spa.Api.Migrations
                         name: "FK_produto_cliente_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "cliente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

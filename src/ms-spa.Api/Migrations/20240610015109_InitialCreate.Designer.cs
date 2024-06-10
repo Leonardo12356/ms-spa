@@ -12,7 +12,7 @@ using ms_spa.Api.Data;
 namespace ms_spa.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240608221048_InitialCreate")]
+    [Migration("20240610015109_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -78,7 +78,7 @@ namespace ms_spa.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClienteId")
+                    b.Property<int?>("ClienteId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("DataCadastro")
@@ -154,9 +154,7 @@ namespace ms_spa.Api.Migrations
                 {
                     b.HasOne("ms_spa.Api.Domain.Models.Cliente", "Cliente")
                         .WithMany("Produtos")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClienteId");
 
                     b.Navigation("Cliente");
                 });
