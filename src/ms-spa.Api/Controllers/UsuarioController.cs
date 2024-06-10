@@ -42,7 +42,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Created("", await _usuarioService.Adicionar(contrato, 0));
+                return Created("", await _usuarioService.Adicionar(contrato));
             }
             catch (BadRequestException ex)
             {
@@ -61,7 +61,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.ObterTodos(0));
+                return Ok(await _usuarioService.ObterTodos());
             }
             catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.ObterPorId(id, 0));
+                return Ok(await _usuarioService.ObterPorId(id));
             }
             catch (NotFoundException ex)
             {
@@ -97,7 +97,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                return Ok(await _usuarioService.Atualizar(id, contrato, 0));
+                return Ok(await _usuarioService.Atualizar(id, contrato));
             }
             catch (NotFoundException ex)
             {
@@ -121,7 +121,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                await _usuarioService.Inativar(id, 0);
+                await _usuarioService.Inativar(id);
                 return NoContent();
             }
             catch (NotFoundException ex)
