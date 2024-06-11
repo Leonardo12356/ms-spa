@@ -33,7 +33,7 @@ namespace ms_spa.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ObterTodos()
         {
             try
@@ -115,7 +115,7 @@ namespace ms_spa.Api.Controllers
 
         [HttpGet]
         [Route("clientes/quantidade-total")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ObterQuantidadeTotalDeClientes()
         {
             try
