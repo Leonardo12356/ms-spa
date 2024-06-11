@@ -128,7 +128,7 @@ static void ConfigurarAplicacao(WebApplication app)
     app.UseSwagger()
         .UseSwaggerUI(c =>
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleFacil.Api v1");
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", ",ms-spa.Api v1");
             c.RoutePrefix = string.Empty;
         });
 
