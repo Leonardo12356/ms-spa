@@ -1,4 +1,4 @@
-# Documentação da Aplicação
+# Gestão de Estoque Api
 
 ## Descrição
 Esta aplicação é um sistema de gerenciamento de gestão de estoque
@@ -22,8 +22,9 @@ Esta aplicação é um sistema de gerenciamento de gestão de estoque
 - Obter os produtos com maior estoque.
 - Obter os produtos com estoque zerado ou negativo.
 
-### Autenticação
+### Autenticação/Usuário
 - Autenticar usuários através de login.
+- Adicionar, listar, atualizar e excluir usuários.
 
 ## Estrutura do Projeto
 - **ms_spa.Api:** Projeto principal da aplicação, contendo a lógica da API e suas Controllers
