@@ -37,7 +37,7 @@ namespace ms_spa.Api.Controllers
         }
 
         [HttpPost]
-        // [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Adicionar(UsuarioRequestContract contrato)
         {
             try
@@ -56,7 +56,7 @@ namespace ms_spa.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ObterTodos()
         {
             try

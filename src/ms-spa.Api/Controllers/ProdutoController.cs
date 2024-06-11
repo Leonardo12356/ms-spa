@@ -32,7 +32,7 @@ namespace ms_spa.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ObterTodos()
         {
             try
@@ -113,7 +113,7 @@ namespace ms_spa.Api.Controllers
 
         [HttpGet]
         [Route("produtos/maior-estoque")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ObterProdutosComMaiorEstoque(int quantidade = 10)
         {
             try
@@ -128,7 +128,7 @@ namespace ms_spa.Api.Controllers
 
         [HttpGet]
         [Route("produtos/estoque-zerado-negativo")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ObterProdutosComEstoqueZeradoOuNegativo()
         {
             try
@@ -143,7 +143,7 @@ namespace ms_spa.Api.Controllers
 
         [HttpGet]
         [Route("produtos/quantidade-total")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ObterQuantidadeTotalDeProdutos()
         {
             try
