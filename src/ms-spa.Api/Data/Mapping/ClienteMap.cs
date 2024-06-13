@@ -41,10 +41,6 @@ namespace ms_spa.Api.Data.Mapping
                 .WithMany(u => u.Clientes)
                 .HasForeignKey(c => c.UsuarioId);
 
-            builder.HasMany(c => c.Produtos)
-                .WithOne(p => p.Cliente)
-                .HasForeignKey(p => p.ClienteId);
-
             builder.HasQueryFilter(c => c.DataInativacao == null);
         }
     }

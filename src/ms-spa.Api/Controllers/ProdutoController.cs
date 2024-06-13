@@ -10,7 +10,7 @@ namespace ms_spa.Api.Controllers
     [Route("produto")]
     public class ProdutoController(IProdutoService produtoService) : BaseController
     {
-        private readonly IService<ProdutoRequestContract, ProdutoResponseContract, int> _produtoService = produtoService;
+        private readonly IProdutoService _produtoService = produtoService;
 
         [HttpPost]
         [Authorize]
@@ -18,8 +18,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                return Created("", await _produtoService.Adicionar(contrato, _idUsuario));
+                return Created("", await _produtoService.Adicionar(contrato));
             }
             catch (BadRequestException ex)
             {
@@ -33,13 +32,12 @@ namespace ms_spa.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ObterTodos()
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.ObterTodos(_idUsuario));
+                return Ok(await _produtoService.ObterTodos());
             }
             catch (Exception ex)
             {
@@ -55,8 +53,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.ObterPorId(id, _idUsuario));
+                return Ok(await _produtoService.ObterPorId(id));
             }
             catch (NotFoundException ex)
             {
@@ -76,8 +73,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                return Ok(await _produtoService.Atualizar(id, contrato, _idUsuario));
+                return Ok(await _produtoService.Atualizar(id, contrato));
             }
             catch (NotFoundException ex)
             {
@@ -101,8 +97,7 @@ namespace ms_spa.Api.Controllers
         {
             try
             {
-                _idUsuario = ObterIdUsuarioLogado();
-                await _produtoService.Inativar(id, _idUsuario);
+                await _produtoService.Inativar(id);
                 return NoContent();
             }
             catch (NotFoundException ex)
@@ -112,6 +107,51 @@ namespace ms_spa.Api.Controllers
             catch (Exception ex)
             {
 
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("produtos/maior-estoque")]
+        [Authorize]
+        public async Task<IActionResult> ObterProdutosComMaiorEstoque(int quantidade = 10)
+        {
+            try
+            {
+                return Ok(await _produtoService.ObterProdutosComMaiorEstoque(quantidade));
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("produtos/estoque-zerado-negativo")]
+        [Authorize]
+        public async Task<IActionResult> ObterProdutosComEstoqueZeradoOuNegativo()
+        {
+            try
+            {
+                return Ok(await _produtoService.ObterProdutosComEstoqueZeradoOuNegativo());
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("produtos/quantidade-total")]
+        [Authorize]
+        public async Task<IActionResult> ObterQuantidadeTotalDeProdutos()
+        {
+            try
+            {
+                return Ok(await _produtoService.ObterQuantidadeTotalDeProdutos());
+            }
+            catch (Exception ex)
+            {
                 return Problem(ex.Message);
             }
         }

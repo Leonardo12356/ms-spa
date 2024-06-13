@@ -25,7 +25,6 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 ValorVenda = 75.0,
                 Observacao = "sabão 5kg",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
             };
 
             // Act
@@ -54,7 +53,6 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 ValorVenda = 75.0,
                 Observacao = "sabão 5kg",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
             };
 
             await repository.Adicionar(produto);
@@ -86,7 +84,6 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 ValorVenda = 75.0,
                 Observacao = "sabão 5kg",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
             };
 
             await repository.Adicionar(produto);
@@ -118,7 +115,6 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 ValorVenda = 75.0,
                 Observacao = "sabão 5kg",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
             };
 
             await repository.Adicionar(produto);
@@ -149,7 +145,6 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 ValorVenda = 75.0,
                 Observacao = "sabão 5kg",
                 DataCadastro = DateTime.Now,
-                ClienteId = 1
             });
             await repository.Adicionar(new Produto
             {
@@ -159,7 +154,6 @@ namespace ms_spa.Test.Domain.Repository.Classes
                 ValorVenda = 400,
                 Observacao = "Guitarra Esp LTD",
                 DataCadastro = DateTime.Now,
-                ClienteId = 2
             });
 
             // Act

@@ -20,7 +20,6 @@ namespace ms_spa.Api.Domain.Models
         public double ValorVenda { get; set; }
         public string Observacao { get; set; } = string.Empty;
         public DateTime DataCadastro { get; set; }
-        public int ClienteId { get; set; }
-        public Cliente Cliente { get; set; } = new();
+
     }
 }
